@@ -1,0 +1,248 @@
+# Set modifier
+set $mod Mod1
+floating_modifier $mod
+
+# Font
+font pango:Terminus 12
+
+# Focus behaviour
+focus_follows_mouse no
+focus_on_window_activation urgent
+
+# Titlebar
+new_window normal
+new_float normal
+#new_window pixel 2
+#new_float pixel 2
+
+# Set keys
+set $up k
+set $down j
+set $left h
+set $right l
+
+# Toggle border (all)
+bindsym Control+$mod+t [class="^.*"] border toggle
+
+# Toggle border
+bindsym $mod+t border toggle
+ 
+# Start a terminal
+bindsym $mod+Return exec urxvt
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start dmenu (a program launcher)
+bindsym $mod+p exec dmenu_run -h 22 -nf '#C0C0C0' -nb '#000000' -sb '#285577' -sf '#FFFFFF' -fn 'terminus-12'
+
+# Autostart
+exec sleep 2 && $HOME/.i3/autostart.sh
+
+# Change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+ 
+# Move focused window
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
+
+# Split in horizontal orientation
+bindsym $mod+c split h
+
+# Split in vertical orientation
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym Mod1+s layout stacking
+#bindsym Mod1+w layout tabbed
+#bindsym Mod1+e layout toggle split
+
+# focus the parent container
+#bindsym Mod1+a focus parent
+
+# focus the child container
+#bindsym Mod1+d focus child
+
+# toggle tiling / floating
+bindsym $mod+shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+
+# switch to workspace
+bindsym $mod+KP_1 workspace 1
+bindsym $mod+KP_2 workspace 2
+bindsym $mod+KP_3 workspace 3
+bindsym $mod+KP_4 workspace 4
+bindsym $mod+KP_5 workspace 5
+bindsym $mod+KP_6 workspace 6
+bindsym $mod+KP_7 workspace 7
+bindsym $mod+KP_8 workspace 8
+bindsym $mod+KP_9 workspace 9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+	bindsym $left resize shrink width 5 px or 5 ppt
+	bindsym $down resize grow height 5 px or 5 ppt
+	bindsym $up resize shrink height 5 px or 5 ppt
+	bindsym $right resize grow width 5 px or 5 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+# Resize key
+bindsym $mod+r mode "resize"
+
+#Go to previous workspace
+bindsym $mod+Tab workspace back_and_forth
+
+#Move workspace to other monitor
+bindsym $mod+shift+comma move workspace to output right
+bindsym $mod+shift+period move workspace to output left
+
+#Go to latest urgent client
+#bindsym $mod+a [urgent=latest] focus
+
+# Application shortcuts
+bindsym Print exec "cd $HOME/Scrot && scrot --no-startup-id"
+bindsym $mod+Print exec "scrot scrot-clipboard.png && gimp scrot-clipboard.png && sleep 5; rm scrot-clipboard.png"
+bindsym $mod+shift+f exec "urxvt -e ranger"
+bindsym $mod+shift+g exec "gimp"
+bindsym $mod+shift+b exec "palemoon"
+bindsym $mod+shift+m exec "i3-msg workspace 4; exec multimc"
+bindsym $mod+shift+p exec "chromium"
+
+# Floating applications
+for_window [class="Lxappearance"] floating enable
+
+# Applications on specific workspaces
+assign [class="^Gimp$" instance="gimp$"] 7
+assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
+assign [class="^MultiMC5$"] 4
+
+# Applications w/o border
+for_window [class="Pale moon"] border pixel 0
+for_window [class="chromium"] border pixel 0
+
+# Maximized applications
+for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
+
+# Volume
+bindsym XF86AudioRaiseVolume exec "amixer set Master Front 1+"
+bindsym XF86AudioLowerVolume exec "amixer set Master Front 1-"
+bindsym XF86AudioMute exec "amixer set Master 1+ toggle"
+
+# i3lock
+bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/.i3/themes/i3lock-ArchLinux.png --tiling"
+
+# tdtool
+bindsym $mod+F1 exec "tdtool-on.sh"
+bindsym $mod+F2 exec "tdtool-film.sh"
+bindsym $mod+F3 exec "tdtool-off.sh"
+bindsym $mod+F4 exec "tdtool-skrivbord.sh"
+bindsym $mod+F5 exec "tdtool-skrivbord2.sh"
+bindsym $mod+F6 exec "tdtool-vrum.sh"
+
+# i3-bar (Middle)
+bar {
+  output DVI-I-1
+	status_command $HOME/.i3/conky.sh
+	tray_output primary 
+	position top
+	font pango:Terminus 12
+	mode dock
+  colors {
+    separator #666666
+    background #000000
+    statusline #839496
+    focused_workspace #4c7899 #285577 #C0C0C0
+    active_workspace #727272 #4F4F4F #C0C0C0
+    inactive_workspace #333333 #222222 #C0C0C0
+    urgent_workspace #BC5959 #A83838 #FFFFFF
+  }
+}
+
+# i3-bar (Left)
+bar {
+  output DVI-D-0
+	status_command $HOME/.i3/conky2.sh
+	tray_output none
+	position top
+	font pango:Terminus 12
+	mode dock
+  colors {
+    separator #666666
+    background #000000
+    statusline #839496
+    focused_workspace #4c7899 #285577 #C0C0C0
+    active_workspace #727272 #4F4F4F #C0C0C0
+    inactive_workspace #333333 #222222 #C0C0C0
+    urgent_workspace #BC5959 #A83838 #FFFFFF
+  }
+}
+
+# i3-bar (Right)
+bar {
+  output HDMI-0
+	status_command $HOME/.i3/conky2.sh
+	tray_output none
+	position top
+	font pango:Terminus 12
+	mode dock
+  colors {
+    separator #666666
+    background #000000
+    statusline #839496
+    focused_workspace #4c7899 #285577 #C0C0C0
+    active_workspace #727272 #4F4F4F #C0C0C0
+    inactive_workspace #333333 #222222 #C0C0C0
+    urgent_workspace #BC5959 #A83838 #FFFFFF
+  }
+}
+
+# Colors
+client.focused #255662 #255662 #C0C0C0 #255662
+client.focused_inactive #073642 #073642 #839496 #073642
+client.unfocused #073642 #073642 #839496 #292d2e
+client.urgent #2f343a #A83838 #839496 #A83838
