@@ -1,3 +1,14 @@
+" An example for a vimrc file.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2014 Nov 05
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"	      for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"	    for OpenVMS:  sys$login:.vimrc
+
 " When started as "evim", evim.vim will already have done these settings.
 syntax on
 if v:progname =~? "evim"
@@ -24,6 +35,9 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -87,18 +101,21 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " Colorscheme
+"colors delek
 colors solarized
 
-" Spelling
 set spelllang=en,sv
 
-set backupdir=$HOME/.vim/backups/
-set directory=$HOME/.vim/backups/
+set backupdir=$HOME/.vim/backups
+set directory=$HOME/.vim/backups
 
 " Format-flowed
 setlocal fo+=aw
 
-" Numbered lines
+if has('gui_running')
+  set guifont=Monospace\ 9
+endif
+
 set number
 
 " Word wrap without line breakss
@@ -142,12 +159,34 @@ omap s :normal vs<CR>
 " I hit cs, replace first match, and hit <Esc>
 " I hit n.n.n.n.n. reviewing and replacing all matches
 
-" Hit Enter to go to end of file
-nnoremap <CR> G
-
-" Hit Backspace to go to beginning of file
-nnoremap <BS> gg
-
 " Insert new line without enter insert mode
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
+
+" Undo dir
+set undodir=~/.vim/undodir
+
+" Set the title
+set title
+
+" pathogen.vim makes it super easy to install plugins and runtime files in 
+" their own private directories.
+execute pathogen#infect()
+
+
+" Tabs
+map to :tabopen 
+map te :tabedit 
+map tc :tabclose<CR>
+
+" Spell check
+map <F1> :setlocal spell! spelllang=sv<CR>
+map <F2> :setlocal spell! spelllang=en_us<CR>
+map <F3> :set nospell<CR>
+map > ]s
+map < [s
+map zs z=
+map za zg
+
+" Redo
+map U :redo<CR>
