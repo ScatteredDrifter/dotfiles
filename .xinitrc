@@ -10,5 +10,4 @@ fi
 numlockx
 setxkbmap se
 urxvtd -q -f -o &
-nitrogen --restore
 exec i3
