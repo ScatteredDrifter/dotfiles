@@ -1,5 +1,6 @@
 # Set modifier
 set $mod Mod1
+set $win Mod4
 floating_modifier $mod
 
 # Font
@@ -34,7 +35,9 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+q kill
 
 # Start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run -h 22 -nf '#C0C0C0' -nb '#000000' -sb '#285577' -sf '#FFFFFF' -fn 'terminus-12'
+#bindsym $mod+p exec dmenu_run -h 22 -nf '#C0C0C0' -nb '#000000' -sb '#285577' -sf '#FFFFFF' -fn 'terminus-12'
+bindsym $mod+p exec rofi -show run -font "Terminus 12"
+bindsym $mod+o exec rofi -show window -font "Terminus 12"
 
 # Autostart
 exec sleep 2 && $HOME/.i3/autostart.sh
@@ -61,12 +64,12 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
-#bindsym Mod1+s layout stacking
-#bindsym Mod1+w layout tabbed
-#bindsym Mod1+e layout toggle split
+bindsym Mod1+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym Mod1+e layout toggle split
 
 # focus the parent container
-#bindsym Mod1+a focus parent
+bindsym $mod+q focus parent
 
 # focus the child container
 #bindsym Mod1+d focus child
@@ -100,15 +103,15 @@ bindsym $mod+KP_8 workspace 8
 bindsym $mod+KP_9 workspace 9
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1; workspace 1
-bindsym $mod+Shift+2 move container to workspace 2; workspace 2
-bindsym $mod+Shift+3 move container to workspace 3; workspace 3
-bindsym $mod+Shift+4 move container to workspace 4; workspace 4
-bindsym $mod+Shift+5 move container to workspace 5; workspace 5
-bindsym $mod+Shift+6 move container to workspace 6; workspace 6
-bindsym $mod+Shift+7 move container to workspace 7; workspace 7
-bindsym $mod+Shift+8 move container to workspace 8; workspace 8
-bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -142,14 +145,14 @@ bindsym $mod+shift+comma move workspace to output right
 bindsym $mod+shift+period move workspace to output left
 
 #Go to latest urgent client
-#bindsym $mod+a [urgent=latest] focus
+bindsym $mod+u [urgent=latest] focus
 
 # Application shortcuts
 bindsym Print exec "cd $HOME/Scrot && scrot --no-startup-id"
 bindsym $mod+Print exec "scrot scrot-clipboard.png && gimp scrot-clipboard.png && sleep 5; rm scrot-clipboard.png"
 bindsym $mod+shift+f exec "urxvt -e ranger"
 bindsym $mod+shift+g exec "gimp"
-bindsym $mod+shift+b exec "palemoon"
+bindsym $mod+shift+b exec "firefox"
 bindsym $mod+shift+m exec "i3-msg workspace 4; exec multimc"
 bindsym $mod+shift+p exec "chromium"
 
@@ -157,13 +160,16 @@ bindsym $mod+shift+p exec "chromium"
 for_window [class="Lxappearance"] floating enable
 
 # Applications on specific workspaces
-assign [class="^Gimp$" instance="gimp$"] 7
 assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
+assign [class="^Minecraft 1.8$" instance="Minecraft 1.8$"] 4
 assign [class="^MultiMC5$"] 4
+assign [class="^Pidgin$"] 5
+assign [class="^Gimp$"] 7
 
 # Applications w/o border
 for_window [class="Pale moon"] border pixel 0
 for_window [class="chromium"] border pixel 0
+#for_window [class="Firefox"] border pixel 0
 
 # Maximized applications
 for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
@@ -184,11 +190,24 @@ bindsym $mod+F4 exec "tdtool-skrivbord.sh"
 bindsym $mod+F5 exec "tdtool-skrivbord2.sh"
 bindsym $mod+F6 exec "tdtool-vrum.sh"
 
+# Random wallpaper with feh
+bindsym $mod+Shift+w exec "feh --randomize --bg-fil /media/HDD0/Pictures/Wallpapers"
+
+# Xrandr
+bindsym $mod+Shift+F11 exec "xrandr --dpi 96 --output DVI-I-1 --primary --rotate normal --output DVI-D-0 --left-of DVI-I-1 --output HDMI-0 --right-of DVI-I-1"
+bindsym $mod+Shift+F12 exec "xrandr --dpi 96 --output DVI-I-1 --primary --rotate left --output DVI-D-0 --left-of DVI-I-1 --output HDMI-0 --right-of DVI-I-1"
+
+# Spawn workspaces in my order at start
+workspace 1 output DVI-I-1
+workspace 2 output DVI-D-0
+workspace 3 output HDMI-0
+
 # i3-bar (Middle)
 bar {
   output DVI-I-1
 	status_command $HOME/.i3/conky.sh
 	tray_output primary 
+	#tray_output none
 	position top
 	font pango:Terminus 12
 	mode dock
@@ -242,7 +261,8 @@ bar {
 }
 
 # Colors
+
 client.focused #255662 #255662 #C0C0C0 #255662
 client.focused_inactive #073642 #073642 #839496 #073642
 client.unfocused #073642 #073642 #839496 #292d2e
-client.urgent #2f343a #A83838 #839496 #A83838
+client.urgent #2f343a #A83838 #ffffff #A83838
