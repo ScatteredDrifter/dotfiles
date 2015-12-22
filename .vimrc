@@ -121,8 +121,8 @@ set number
 " Word wrap without line breakss
 :set wrap
 :set linebreak
-:set nolist  " list disables linebreak
-:set textwidth=0
+:set nolist  
+:set textwidth=500
 :set wrapmargin=0
 :set formatoptions-=t
 
@@ -180,13 +180,19 @@ map te :tabedit
 map tc :tabclose<CR>
 
 " Spell check
-map <F1> :setlocal spell! spelllang=sv<CR>
-map <F2> :setlocal spell! spelllang=en_us<CR>
-map <F3> :set nospell<CR>
+map <F2> :setlocal spell! spelllang=sv<CR>
+map <F3> :setlocal spell! spelllang=en_us<CR>
+map <F4> :set nospell<CR>
 map > ]s
 map < [s
 map zs z=
-map za zg
+map za zg>
 
 " Redo
 map U :redo<CR>
+
+" Repeat last edit
+nmap § .
+
+" Syntax highlightning for .md files
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
