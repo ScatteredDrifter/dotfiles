@@ -1,0 +1,36 @@
+"1.0.5-pm
+
+loadplugins '\.(js|penta)$'
+group user
+highlight -link=FontFixed CmdLine font-family: Monospace; font-size: 9pt; font-weight: bold;
+highlight CmdOutput font-family: Monospace; font-size: 9pt; font-weight: bold;
+highlight CompItem font-size: 9pt;
+highlight Hint font-family: monospace; font-size: 12px; font-weight: bold; color: #333333; background-color: #FFFFEB; padding: 2px 3px; border: 1px solid #9E9A91; text-transform: uppercase
+highlight -link=FontFixed StatusLine font-size: 9pt; font-weight: bold; background: #EBBE4F; 
+highlight StatusLineBroken font-size: 9pt; font-weight: bold; background: #ffa0a0 !important; color: black;
+highlight StatusLineExtended font-size: 9pt; font-weight: bold;
+highlight StatusLineNormal font-size: 9pt; font-weight: bold; background: #1c1d1f !important; color: white;
+highlight StatusLineSecure font-size: 9pt; font-weight: bold; background: #a0a0ff !important; color: black;
+map -count -modes=n > -builtin <count>:tabmove!<Space>+1<Return>
+map -count -modes=n <C-c> -builtin <count><C-v><C-c>
+map -count -modes=n <C-v> -builtin <count><C-v><C-v>
+map -count -modes=n <C-x> -builtin <count><C-v><C-x>
+map -count -modes=n,v h -builtin <count>5h
+map -count -modes=n,v j -builtin <count>5j
+map -count -modes=n J -builtin <count>:tabnext<Return>
+map -count -modes=n,v k -builtin <count>5k
+map -count -modes=n K -builtin <count>:tabprevious<Return>
+map -count -modes=n,v l -builtin <count>5l
+map -count -modes=n <lt> -builtin <count>:tabmove!<Space>-1<Return>
+map -count -modes=n pp -builtin <count>:private<Space>winopen<Return>
+map -count -modes=n,v <C-s> -builtin <count><C-t>:preferences<Return>
+map -count -modes=n,v <C-a> -builtin <count><C-t>:tabopen<Space>about:addons<Return>
+map -count -modes=n,v <C-d> -builtin <count><C-t>:tabopen<Space>about:downloads<Return>
+set defsearch=duckduckgo
+set editor='urxvt -e vim -X'
+set guioptions=s
+set hintkeys=asdfhlkj
+set showtabline=multitab
+set titlestring='Web Browser'
+
+" vim: set ft=pentadactyl:
