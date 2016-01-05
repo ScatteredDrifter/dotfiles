@@ -89,14 +89,20 @@ macro pager \cu |urlview\n
 #  replying to.
 set reverse_name=yes
 set reverse_realname=yes
+set use_from=yes
+set use_envelope_from=yes
+
+# Abook
+set query_command = "abook --mutt-query '%s'"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
 
 # Keybindings
 macro index gh "<change-folder> =INBOX<enter>"
 macro index gi "<change-folder> =Myndigheter<enter>"
 macro index gs "<change-folder> =Shopping<enter>"
 macro index gp "<change-folder> =Personligt<enter>"
-#macro pager d '<delete-message><exit>'
-macro pager -d '<
+macro pager d '<delete-message><exit>'
 #bind index G imap-fetch-mail
 bind index G change-folder
 bind index l display-message
