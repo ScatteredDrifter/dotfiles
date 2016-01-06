@@ -102,7 +102,9 @@ macro index gh "<change-folder> =INBOX<enter>"
 macro index gi "<change-folder> =Myndigheter<enter>"
 macro index gs "<change-folder> =Shopping<enter>"
 macro index gp "<change-folder> =Personligt<enter>"
+macro index r "<change-folder> =INBOX<enter>"
 macro pager d '<delete-message><exit>'
+macro pager d "<sync-mailbox>"
 #bind index G imap-fetch-mail
 bind index G change-folder
 bind index l display-message
