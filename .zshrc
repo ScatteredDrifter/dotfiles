@@ -1,4 +1,5 @@
 autoload -U promptinit && promptinit
+autoload -U compinit && compinit
 autoload -U colors && colors
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 autoload -Uz compinit
@@ -14,19 +15,18 @@ source "$HOME/.zsh/functions"
 source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 source "$HOME/.zsh/plugins/h.sh"
 source "$HOME/.zsh/plugins/t-completion.zsh"
-source "$HOME/.zsh/plugins/vi-mode.zsh"
 
 # Exports
 export SHELL="/bin/zsh"
 export EDITOR="vim"
-export BROWSER="palemoon"
+export BROWSER="icecat"
 export LC_ALL=en_US.UTF-8
 export LC_TIME=sv_SE.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZLS_COLORS=$LS_COLORS
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="${PATH}:/home/johan/bin"
+export PATH="${PATH}:$HOME/bin"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/Scripts:$PATH"
@@ -74,16 +74,12 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 zstyle ':completion:*' menu select 
 
-# ssh-agent
-#envoy -t ssh-agent -a ~/.ssh/id_ed25519_fjuppen
-#source <(envoy -p)
-
-#keychain
-eval $(keychain --eval --noask --quiet ~/.ssh/id_ed25519_fjuppen)
-
 # Quote pasted URLs
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 
+# Home and End keys
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line 
