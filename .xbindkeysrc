@@ -1,0 +1,22 @@
+# SuperKey+HJKL to arrow keys
+
+"xdotool keyup h && xdotool key Left"
+    Mod2+Mod4 + h
+
+"xdotool keyup j && xdotool key Down"
+    Mod2+Mod4 + j
+
+"xdotool keyup k && xdotool key Up"
+    Mod2+Mod4 + k
+
+"xdotool keyup l && xdotool key Right"
+    Mod2+Mod4 + l
+
+# SuperKey+Comma/Period to Home/End
+
+"xdotool keyup comma && xdotool key End"
+    Mod2+Mod4 + comma
+
+"xdotool keyup period && xdotool key Home"
+    Mod2+Mod4 + period
+
