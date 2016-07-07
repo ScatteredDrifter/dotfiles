@@ -9,4 +9,4 @@ echo '['
 # We send an empty first array of blocks to make the loop simpler:
 echo '[],'
 
-exec conky -c $HOME/.conkyrc
+exec conky -c $HOME/.i3/conky/conky1rc
