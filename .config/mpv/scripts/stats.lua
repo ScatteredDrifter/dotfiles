@@ -87,7 +87,6 @@ function add_file(s)
 
     append_property(s, sec, "filename", {prefix="File:", nl="", indent=""})
     append_property(s, sec, "metadata/title", {prefix="Title:"})
-    append_property(s, sec, "chapter", {prefix="Chapter:"})
     if append_property(s, sec, "cache-used", {prefix="Cache:"}) then
         append_property(s, sec, "demuxer-cache-duration",
                         {prefix="+", suffix=" sec", nl="", indent=o.kv_sep,
@@ -109,11 +108,6 @@ function add_video(s)
                          no_prefix_markup=true, no_value=true},
                         {no=true})
     end
-    append_property(s, sec, "avsync", {prefix="A-V:"})
-    if append_property(s, sec, "drop-frame-count", {prefix="Dropped:"}) then
-        append_property(s, sec, "vo-drop-frame-count", {prefix="VO:", nl=""})
-        append_property(s, sec, "vo-missed-frame-count", {prefix="Missed:", nl=""})
-    end
     if append_property(s, sec, "fps", {prefix="FPS:", suffix=" (specified)"}) then
         append_property(s, sec, "estimated-vf-fps",
                         {suffix=" (estimated)", nl="", indent=""})
@@ -121,20 +115,10 @@ function add_video(s)
         append_property(s, sec, "estimated-vf-fps",
                         {prefix="FPS:", suffix=" (estimated)"})
     end
-    if append_property(s, sec, "video-speed-correction", {prefix="DS:"}) then
-        append_property(s, sec, "audio-speed-correction",
-                        {prefix="/", nl="", indent=" ", prefix_sep=" ", no_prefix_markup=true})
-    end
     if append_property(s, sec, "video-params/w", {prefix="Native Resolution:"}) then
         append_property(s, sec, "video-params/h",
                         {prefix="x", nl="", indent=" ", prefix_sep=" ", no_prefix_markup=true})
     end
-    append_property(s, sec, "window-scale", {prefix="Window Scale:"})
-    append_property(s, sec, "video-params/aspect", {prefix="Aspect Ratio:"})
-    append_property(s, sec, "video-params/pixelformat", {prefix="Pixel format:"})
-    append_property(s, sec, "video-params/colormatrix", {prefix="Colormatrix:"})
-    append_property(s, sec, "video-params/primaries", {prefix="Primaries:"})
-    append_property(s, sec, "video-params/colorlevels", {prefix="Levels:"})
     append_property(s, sec, "packet-video-bitrate", {prefix="Bitrate:", suffix=" kbps"})
 end
 
