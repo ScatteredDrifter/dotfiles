@@ -32,5 +32,8 @@ set guioptions=s
 set hintkeys=asdfhlkj
 set showtabline=multitab
 set titlestring='Web Browser'
-
+au Fullscreen * set guioptions=s
 " vim: set ft=pentadactyl:
+set showtabline=always
+
+
