@@ -5,13 +5,14 @@ URxvt.cursorBlink: false
 URxvt*scrollBar: false
 URxvt*borderLess: false
 URxvt.fading: 0
+URxvt*hold: boolean
 
 !--Colors?--!
 URxvt.intensityStyles: false
 
 !--Clickable URLs--!
 URxvt.perl-ext-common: default,matcher,clipboard
-URxvt.url-launcher: firefox
+URxvt.url-launcher: icecat
 URxvt.matcher.button: 1
 
 !--Paste--!
@@ -19,6 +20,7 @@ URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755: False
 
 !-- Fonts --!
+URxvt.letterSpace: 0
 URxvt*font:xft:Terminus:size=12, \
     xft:unifont:medium
 URxvt*boldFont:xft:Terminus:size=12, \
@@ -61,13 +63,13 @@ URxvt*boldFont:xft:Terminus:size=12, \
 !
 ! URxvt*background:            S_base03
 
-URxvt.background:			S_base03
-URxvt.foreground:			S_base0
-*fading:					0
-*fadeColor:					S_base03
-URxvt.cursorColor:			S_base1
-*pointerColorBackground:	S_base01
-*pointerColorForeground:	S_base1
+URxvt.background:	S_base03
+URxvt.foreground:	S_base0
+*fading:		0
+*fadeColor:		S_base03
+URxvt.cursorColor:	S_base1
+*pointerColorBackground:S_base01
+*pointerColorForeground:S_base1
 
 URxvt.color0:		S_base02
 URxvt.color1:		S_red
@@ -85,3 +87,13 @@ URxvt.color12:		S_base0
 URxvt.color13:		S_violet
 URxvt.color14:		S_base1
 URxvt.color15:		S_base3
+
+! --------------------------------------------------------------------------
+! ! ROFI Color theme
+! --------------------------------------------------------------------------
+rofi.color-enabled: true
+rofi.color-window: #002b36, #255662, #0d4350
+rofi.color-normal: #002b36, #839496, #002b36, #0d4350, #839496
+rofi.color-active: #0d4350, #2aa198, #002b36, #839496, #002B36
+rofi.color-urgent: #a83838, #ffffff, #eee8d5, #a83838, #ffffff
+
