@@ -14,7 +14,7 @@ auto_view application/msword
 auto_view application/pdf
 
 # view html automatically and save html for last
-auto_view text/html
+auto_view text/plain
 alternative_order text/plain text/enriched text/html
  
 # make default search pattern to search in To, Cc and Subject
@@ -75,11 +75,13 @@ unset imap_passive
 set header_cache=/var/tmp/.mutt
 
 # Accounts
-folder-hook 'gmail.com' 'source ~/.mutt/accounts/gmail.conf'
+folder-hook 'fastmail' 'source ~/.mutt/accounts/fastmail.conf'
+folder-hook 'gmail' 'source ~/.mutt/accounts/gmail.conf'
 
-# switch to default account on startup
-source ~/.mutt/accounts/gmail.conf
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/accounts/gmail.conf<enter><change-folder>!<enter>'
+# Switch to default account on startup
+source ~/.mutt/accounts/fastmail.conf
+macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/accounts/fastmail.conf<enter><change-folder>!<enter>'
+macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/accounts/gmail.conf<enter><change-folder>!<enter>'
 
 # urlview
 macro pager \cu |urlview\n
@@ -99,12 +101,12 @@ macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender ad
 
 # Keybindings
 macro index gh "<change-folder> =INBOX<enter>"
-macro index gi "<change-folder> =Myndigheter<enter>"
+macro index gm "<change-folder> =Myndigheter<enter>"
 macro index gs "<change-folder> =Shopping<enter>"
 macro index gp "<change-folder> =Personligt<enter>"
 macro index r "<change-folder> =INBOX<enter>"
-macro index s "<sync-mailbox>"
-macro pager d '<delete-message><exit>'
+#macro index s "<sync-mailbox>"
+macro pager d "<delete-message><exit>"
 #bind index G imap-fetch-mail
 bind index G change-folder
 bind index l display-message
