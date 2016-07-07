@@ -1,6 +1,5 @@
 # Set modifier
 set $mod Mod1
-set $win Mod4
 floating_modifier $mod
 
 # Font
@@ -29,17 +28,14 @@ bindsym Control+$mod+t [class="^.*"] border toggle
 bindsym $mod+t border toggle
  
 # Start a terminal
-bindsym $mod+Return exec urxvt -e fish
+bindsym $mod+Return exec urxvt
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# dmenu 
-#bindsym $mod+p exec dmenu_run -h 22 -nf '#C0C0C0' -nb '#000000' -sb '#285577' -sf '#FFFFFF' -fn 'terminus-12'
-
 # rofi
-bindsym $mod+p exec fish -i -c 'rofi -show run -font "Terminus 12"'
-#bindsym $mod+shift+p exec fish -i -c '/usr/bin/rofi -show window -font "Terminus 12"'
+bindsym $mod+p exec rofi -show run -font "Terminus 12"
+bindsym $mod+shift+p exec rofi -show window -font "Terminus 12"
 
 # Autostart
 exec sleep 2 && $HOME/.i3/autostart.sh
@@ -73,9 +69,6 @@ bindsym Mod1+e layout toggle split
 # focus the parent container
 bindsym $mod+q focus parent
 
-# focus the child container
-#bindsym Mod1+d focus child
-
 # toggle tiling / floating
 bindsym $mod+shift+space floating toggle
 
@@ -92,6 +85,7 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # switch to workspace
 bindsym $mod+KP_1 workspace 1
@@ -103,6 +97,7 @@ bindsym $mod+KP_6 workspace 6
 bindsym $mod+KP_7 workspace 7
 bindsym $mod+KP_8 workspace 8
 bindsym $mod+KP_9 workspace 9
+bindsym $mod+KP_0 workspace 10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -114,6 +109,7 @@ bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -123,9 +119,6 @@ bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# shutdown computer
-bindsym $mod+Shift+p exec "i3-nagbar -t warning -m 'You pressed the shutdown shortcut. Do you really want to shutdown your computer?' -b 'Yes, shutdown my computer' 'systemctl poweroff'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -153,37 +146,34 @@ bindsym $mod+shift+period move workspace to output left
 bindsym $mod+u [urgent=latest] focus
 
 # Application shortcuts
-bindsym Print exec "cd $HOME/Scrot && scrot --no-startup-id"
+bindsym Print exec "cd $HOME/Scrot && scrot --no-startup-id && notify-send 'Screenshot captured!' 'Image saved in ~/Scrot'"
 bindsym $mod+shift+f exec "urxvt -e ranger"
 bindsym $mod+shift+g exec "gimp"
-bindsym $mod+shift+b exec "palemoon"
+bindsym $mod+shift+b exec "icecat"
 bindsym $mod+shift+m exec "i3-msg workspace 4; exec multimc"
 bindsym $mod+shift+i exec "chromium --incognito"
+bindsym $mod+shift+v exec "virtualbox"
 
 # Application rules
 assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
 assign [class="^Minecraft 1.8.9$" instance="Minecraft 1.8.9$"] 4
+assign [class="^Minecraft 1.9$" instance="Minecraft 1.9$"] 4 
+assign [class="^Minecraft 1.9.4$" instance="Minecraft 1.9.4$"] 4
+assign [class="^Minecraft 1.10.2$" instance="Minecraft 1.10.2$"] 4
 assign [class="^MultiMC5$"] 4
 assign [class="^Gimp$"] 7
-assign [class="^mpv$"] 3
 for_window [class="Lxappearance"] floating enable
-#for_window [class="Pale moon"] border pixel 0
 for_window [class="chromium"] border pixel 0
 for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
-for_window [class="^mpv$"] fullscreen
+for_window [class="^Minecraft 1.8.9$" instance="Minecraft 1.8.9$"] fullscreen
+for_window [class="^Minecraft 1.9$" instance="Minecraft 1.9$"] fullscreen
+for_window [class="^Minecraft 1.9.4$" instance="Minecraft 1.9.4$"] fullscreen
+for_window [class="^Minecraft 1.10.2$" instance="Minecraft 1.10.2$"] fullscreen
 
 # Volume (ALSA)
-bindsym XF86AudioRaiseVolume exec "amixer set Master Front 1+"
-bindsym XF86AudioLowerVolume exec "amixer set Master Front 1-"
-bindsym XF86AudioMute exec "amixer set Master 1+ toggle"
-
-# Volume (Pulseaudio)
-#bindsym XF86AudioRaiseVolume exec "pulseaudio-ctl up 3"
-#bindsym XF86AudioLowerVolume exec "pulseaudio-ctl down 3"
-#bindsym XF86AudioMute exec "pulseaudio-ctl mute"
-#bindsym $mod+Right exec "pulseaudio-ctl up 3"
-#bindsym $mod+Left exec "pulseaudio-ctl down 3"
-#bindsym $mod+Left exec "pulseaudio-ctl mute"
+bindsym $mod+Up exec "amixer set Master Front 3+"
+bindsym $mod+Down exec "amixer set Master Front 3-"
+bindsym $mod+m exec "amixer set Master toggle"
 
 # i3lock
 bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/.i3/themes/i3lock-ArchLinux.png --tiling"
@@ -191,18 +181,19 @@ bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/.i3/themes/i3lock-ArchLinux.png -
 # Random wallpaper with feh
 bindsym $mod+Shift+w exec "feh --randomize --bg-fil /media/HDD0/Pictures/Wallpapers"
 
-# Spawn workspaces in my order at start
+# Spawn workspaces in specific order
 workspace 1 output DVI-I-1
 workspace 2 output DVI-D-0
 workspace 3 output HDMI-0
 workspace 4 output DVI-I-1
+workspace 9 output HDMI-0
 
 # i3-bar (Middle)
 bar {
   output DVI-I-1
-	status_command $HOME/.i3/conky.sh
-	#tray_output primary
-	tray_output none
+	status_command $HOME/.i3/conky1.sh
+    #tray_output primary
+    tray_output none
 	position top
 	font pango:Terminus 12
 	mode dock
@@ -239,7 +230,7 @@ bar {
 # i3-bar (Right)
 bar {
   output HDMI-0
-	status_command $HOME/.i3/conky2.sh
+	status_command $HOME/.i3/conky3.sh
 	tray_output none
 	position top
 	font pango:Terminus 12
