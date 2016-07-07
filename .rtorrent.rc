@@ -44,7 +44,6 @@ peer_exchange = no
 # Folders
 #--------------------
 
-# Torrents
 schedule = watch_directory_torrents, 5, 5, "load.start=/media/HDD0/Torrent-files/torrents/*.torrent,d.directory.set=/media/HDD0/Torrents"
 
 #--------------------
