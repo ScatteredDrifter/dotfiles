@@ -81,10 +81,9 @@ folder-hook 'gmail' 'source ~/.mutt/accounts/gmail.conf'
 # Switch to default account on startup
 source ~/.mutt/accounts/fastmail.conf
 macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/accounts/fastmail.conf<enter><change-folder>!<enter>'
-macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/accounts/gmail.conf<enter><change-folder>!<enter>'
 
-# urlview
-macro pager \cu |urlview\n
+# Prompt before exiting Mutt
+set quit=ask-yes
 
 #  You will need to set this variable in order for mutt to build the From: line 
 #  of your replies using the address where you received the messages you are 
@@ -107,6 +106,7 @@ macro index gp "<change-folder> =Personligt<enter>"
 macro index r "<change-folder> =INBOX<enter>"
 #macro index s "<sync-mailbox>"
 macro pager d "<delete-message><exit>"
+#macro index d "<delete-message>"
 #bind index G imap-fetch-mail
 bind index G change-folder
 bind index l display-message
