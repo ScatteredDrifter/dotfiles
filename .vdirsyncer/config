@@ -1,0 +1,58 @@
+[general]
+# A folder where vdirsyncer can store some metadata about each pair.
+status_path = ~/.vdirsyncer/status/
+
+# CARDDAV
+[pair owncloud_contacts]
+# A `[pair <name>]` block defines two storages `a` and `b` that should be
+# synchronized. The definition of these storages follows in `[storage <name>]`
+# blocks. This is similar to accounts in OfflineIMAP.
+a = owncloud_contacts_local
+b = owncloud_contacts_remote
+
+# Synchronize all collections that can be found.
+# You need to run `vdirsyncer discover` if new calendars/addressbooks are added
+# on the server.
+collections = ["from a", "from b"]
+
+# Synchronize the "display name" property into a local file (~/.contacts/displayname).
+metadata = ["displayname"]
+
+# To resolve a conflict the following values are possible:
+#   `null` - abort when collisions occur (default)
+#   `"a wins"` - assume a's items to be more up-to-date
+#   `"b wins"` - assume b's items to be more up-to-date
+#conflict_resolution = null
+
+[storage owncloud_contacts_local]
+# A storage references actual data on a remote server or on the local disk.
+# Similar to repositories in OfflineIMAP.
+type = filesystem
+path = ~/.vdirsyncer/contacts/
+fileext = .vcf
+
+[storage owncloud_contacts_remote]
+type = carddav
+url = https://<adress>/remote.php/dav/addressbooks/users/<username>/contacts
+username = <username>
+password = <password>
+
+# CALDAV
+[pair owncloud_calendar]
+a = owncloud_calendar_local
+b = owncloud_calendar_remote
+collections = ["from a", "from b"]
+
+# Calendars also have a color property
+metadata = ["displayname", "color"]
+
+[storage owncloud_calendar_local]
+type = filesystem
+path = ~/.vdirsyncer/calendars/
+fileext = .ics
+
+[storage owncloud_calendar_remote]
+type = caldav
+url = https://<adress>/remote.php/dav/
+username = <username>
+password = <password>
