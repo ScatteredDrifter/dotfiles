@@ -1,0 +1,5 @@
+# Hund's Hosts List
+
+127.0.0.1 prisjakt.nu
+127.0.0.1 prisjakt.se
+
