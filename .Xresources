@@ -6,29 +6,37 @@ URxvt*scrollBar: false
 URxvt*borderLess: false
 URxvt.fading: 0
 URxvt*hold: boolean
-
-!--Colors?--!
 URxvt.intensityStyles: false
+!URxvt.perl-ext-common: default,matcher,clipboard,keyboard-select,selection_to_clipboard
+URxvt.perl-ext-common: default,matcher,clipboard,keyboard-select
 
-!--Clickable URLs--!
-URxvt.perl-ext-common: default,matcher,clipboard
-URxvt.url-launcher: icecat
+! URLs
+URxvt.matcher.rend.0: Uline Bold fg6
+URxvt.keysym.Control-l: perl:matcher:last
+URxvt.keysym.Control-u: perl:matcher:list
+
+! Clickable URLs
+URxvt.url-launcher: qutebrowser
 URxvt.matcher.button: 1
 
-!--Paste--!
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-URxvt.iso14755: False
+! Paste
+!URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+!URxvt.iso14755: False
 
-!-- Fonts --!
+! Fonts
 URxvt.letterSpace: 0
 URxvt*font:xft:Terminus:size=12, \
     xft:unifont:medium
 URxvt*boldFont:xft:Terminus:size=12, \
     xft:unifont:medium
 
-!-- Colors --!
+! Select text with keyboard
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
 
-! Common
+! Search text with keyboard
+URxvt.keysym.M-s: perl:keyboard-select:search
+
+! Colors
 #define S_yellow		#b58900
 #define S_orange		#cb4b16
 #define S_red			#dc322f
@@ -38,7 +46,6 @@ URxvt*boldFont:xft:Terminus:size=12, \
 #define S_cyan			#2aa198
 #define S_green			#859900
 
-! Dark
 #define S_base03		#002b36
 #define S_base02		#0d4350
 #define S_base01		#586e75
@@ -48,25 +55,10 @@ URxvt*boldFont:xft:Terminus:size=12, \
 #define S_base2			#839496
 #define S_base3			#fdf6e3
 
-! Light
-! #define S_base03		#fdf6e3
-! #define S_base02		#839496
-! #define S_base01		#93a1a1
-! #define S_base00		#839496
-! #define S_base0		#657b83
-! #define S_base1		#586e75
-! #define S_base2		#073642
-! #define S_base3		#002b36
-
-! To only apply colors to your terminal, for example, prefix
-! the color assignment statement with its name. Example:
-!
-! URxvt*background:            S_base03
-
 URxvt.background:	S_base03
 URxvt.foreground:	S_base0
-*fading:		0
-*fadeColor:		S_base03
+*fading:		    0
+*fadeColor:		    S_base03
 URxvt.cursorColor:	S_base1
 *pointerColorBackground:S_base01
 *pointerColorForeground:S_base1
@@ -88,12 +80,9 @@ URxvt.color13:		S_violet
 URxvt.color14:		S_base1
 URxvt.color15:		S_base3
 
-! --------------------------------------------------------------------------
-! ! ROFI Color theme
-! --------------------------------------------------------------------------
+! Rofi color theme
 rofi.color-enabled: true
 rofi.color-window: #002b36, #255662, #0d4350
 rofi.color-normal: #002b36, #839496, #002b36, #0d4350, #839496
 rofi.color-active: #0d4350, #2aa198, #002b36, #839496, #002B36
 rofi.color-urgent: #a83838, #ffffff, #eee8d5, #a83838, #ffffff
-
