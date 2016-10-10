@@ -1,12 +1,16 @@
-autoload -U promptinit && promptinit
-autoload -U compinit && compinit
-autoload -U colors && colors
-zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
-autoload -Uz compinit
+# Use advanced prompt support
+#autoload -U promptinit && promptinit
 
 # My promt
 PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[1;35m%}%~ 
 %{\e[0m%}>> '
+
+# Use modern completion system
+autoload -U compinit && compinit
+
+# Use colors
+autoload -U colors && colors
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 
 # Load in additional files
 source "$HOME/.zsh/alias"
@@ -32,11 +36,6 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/Scripts:$PATH"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
 
-# Ruby PATH
-if which ruby >/dev/null && which gem >/dev/null; then
-    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
-
 # zsh-completions
 fpath=($HOME/Git/zsh-completions/src $fpath)
 fpath=($HOME/.zsh/completions/ $fpath)
@@ -46,25 +45,21 @@ HISTFILE=~/.zsh/history
 HISTSIZE=250000
 SAVEHIST=100000
 
-# History search 
+# No history if command starts with space
+setopt histignorespace
+
+# History Vi-like search 
 bindkey -M vicmd k history-search-backward
 bindkey -M vicmd j history-search-forward
 bindkey -M vicmd / history-incremental-search-backward
 bindkey -M vicmd n history-incremental-search-backward
 bindkey -M vicmd N history-incremental-search-forward
 
-# No history if command starts with space
-setopt histignorespace
-
 # LS_COLORS
 eval $(dircolors -b $HOME/.zsh/plugins/ls_colors)
 
 # Respect multibyte characters when found in strings
 unsetopt MULTIBYTE
-
-# Use modern completion system
-autoload -Uz compinit
-compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -136,3 +131,8 @@ bindkey '^?' backward-delete-char  #backspace
 # ctrl+r to search history
 bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
+
+# Ruby PATH
+if which ruby >/dev/null && which gem >/dev/null; then
+    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
