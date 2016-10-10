@@ -1,15 +1,3 @@
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2014 Nov 05
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
-" When started as "evim", evim.vim will already have done these settings.
 syntax on
 if v:progname =~? "evim"
   finish
@@ -58,7 +46,7 @@ if has("autocmd")
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
   " 'cindent' is on in C files, etc.
   " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+  filetype plugin indent off
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -104,24 +92,23 @@ endif
 "colors delek
 colors solarized
 
+" Spellcheck
 set spelllang=en,sv
 
+" Vim folders
 set backupdir=$HOME/.vim/backups
 set directory=$HOME/.vim/backups
 
 " Format-flowed
 setlocal fo+=aw
 
-if has('gui_running')
-  set guifont=Monospace\ 9
-endif
-
+" Line numbering
 set number
 
 " Word wrap without line breakss
 :set wrap
 :set linebreak
-:set nolist  
+:set nolist
 :set textwidth=500
 :set wrapmargin=0
 :set formatoptions-=t
@@ -169,24 +156,29 @@ set undodir=~/.vim/undodir
 " Set the title
 set title
 
-" pathogen.vim makes it super easy to install plugins and runtime files in 
+" pathogen.vim makes it super easy to install plugins and runtime files in
 " their own private directories.
-execute pathogen#infect()
-
+"execute pathogen#infect()
 
 " Tabs
-map to :tabopen 
-map te :tabedit 
+map to :tabopen
+map te :tabedit
 map tc :tabclose<CR>
 
 " Spell check
 map <F2> :setlocal spell! spelllang=sv<CR>
 map <F3> :setlocal spell! spelllang=en_us<CR>
 map <F4> :set nospell<CR>
-map > ]s
-map < [s
-map zs z=
-map za zg>
+" Go to next misspelled word
+map ff [s
+" Go to previous misspelled word
+map fF ]s
+" Correct misspelled word
+map fn z=
+" Add new word to spellfile
+map fa zg>
+" Remove word from spellfile
+map fr zuw
 
 " Redo
 map U :redo<CR>
@@ -196,3 +188,21 @@ nmap § .
 
 " Syntax highlightning for .md files
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
+" Case insensitive search
+set ic
+
+" When running a search, get Vim to highlight found words
+"set hlsearch
+
+" Logic
+set shiftwidth=4
+
+" Set tab width
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Allow `h` and `l` to move you to previous/next line when reached
+set whichwrap+=>,l
+set whichwrap+=<,h
