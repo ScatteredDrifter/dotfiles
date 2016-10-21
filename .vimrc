@@ -170,13 +170,13 @@ map <F2> :setlocal spell! spelllang=sv<CR>
 map <F3> :setlocal spell! spelllang=en_us<CR>
 map <F4> :set nospell<CR>
 " Go to next misspelled word
-map ff [s
+map ff ]s
 " Go to previous misspelled word
-map fF ]s
+map fF [s
 " Correct misspelled word
 map fn z=
 " Add new word to spellfile
-map fa zg>
+map fa zg
 " Remove word from spellfile
 map fr zuw
 
