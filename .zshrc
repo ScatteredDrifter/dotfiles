@@ -54,6 +54,8 @@ bindkey -M vicmd j history-search-forward
 bindkey -M vicmd / history-incremental-search-backward
 bindkey -M vicmd n history-incremental-search-backward
 bindkey -M vicmd N history-incremental-search-forward
+bindkey -M vicmd k history-beginning-search-backward
+bindkey -M vicmd j history-beginning-search-forward
 
 # LS_COLORS
 eval $(dircolors -b $HOME/.zsh/plugins/ls_colors)
