@@ -206,3 +206,23 @@ set expandtab
 " Allow `h` and `l` to move you to previous/next line when reached
 set whichwrap+=>,l
 set whichwrap+=<,h
+
+" Bind ; to :
+nnoremap ; :
+
+" Always turn on syntax highlighting for diffs
+augroup PatchDiffHighlight
+    autocmd!
+    autocmd BufEnter  *.patch,*.rej,*.diff   syntax enable
+augroup END
+
+" Don't allow editing of read only files
+autocmd BufRead * call RONoEdit()
+
+function! RONoEdit()
+  if &readonly == 1
+    set nomodifiable
+  else
+    set modifiable
+  endif
+endfunction
