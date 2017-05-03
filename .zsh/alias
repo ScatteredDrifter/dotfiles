@@ -1,6 +1,5 @@
 # Basic directory operations
 alias ..='cd ..'
-alias mkdate='mkdir $(date +%Y-%m-%d)'
 
 # List direcory contents
 alias ls='ls --color=auto'
@@ -8,77 +7,77 @@ alias ll='ls -lh --color=auto --g'
 alias la='ls -lAh --color=auto --g'
 alias llg='ls -la | grep'
 alias lld='ls -l --sort=time -r'
-alias lldl='ls -l --color=always --sort=time | less -R'
 alias lls='ls -lAh --color=always "$@" | less -R'
 
 # zsh
 alias reload='source $HOME/.zshrc'
 alias history='cat $HOME/.zsh/history'
-alias cx='chmod +x'
 
 # Configs
-alias ez='vim $HOME/.zshrc'
-alias ea='vim $HOME/.zsh/alias'
-alias ei3='vim $HOME/.i3/config'
-alias em='vim $HOME/.mutt/muttrc'
-alias autostart='vim $HOME/.i3/autostart.sh'
-
-# Utils
-alias du='du -h --max-depth=1 "$@" | sort -k 1,1hr -k 2,2f'
-alias df='df -h'
-alias grep='grep --color=always'
+alias c-zsh='vim $HOME/.zshrc'
+alias c-alias='vim $HOME/.zsh/alias'
+alias c-i3='vim $HOME/.i3/config'
+alias c-mutt='vim $HOME/.mutt/muttrc'
+alias c-autostart='vim $HOME/.i3/autostart.sh'
 
 # Applications
+alias du='du -h --max-depth=1 "$@" | sort -k 1,1hr -k 2,2f'
+alias df='df -h'
+alias grep='grep -i --color=auto'
 alias v='vim'
 alias mpv='mpv --no-audio-display'
-alias live="printf '\33]2;%s\007' "livestreamer-curses" && livestreamer-curses"
+alias live="printf '\33]2;%s\007' "twitchy" && twitchy"
 alias news="printf '\33]2;%s\007' "Newsbeuter" && newsbeuter -C $HOME/.config/newsbeuter/news/config -c $HOME/.config/newsbeuter/news/cache.db -u $HOME/.config/newsbeuter/news/urls"
-alias yt="printf '\33]2;%s\007' "Newsbeuter" && newsbeuter -C $HOME/.config/newsbeuter/youtube/config -c $HOME/.config/newsbeuter/youtube/cache.db -u $HOME/.config/newsbeuter/youtube/urls"
+alias yt="printf '\33]2;%s\007' 'Newsbeuter - YouTube' && newsbeuter -C $HOME/.config/newsbeuter/youtube/config -c $HOME/.config/newsbeuter/youtube/cache.db -u $HOME/.config/newsbeuter/youtube/urls"
 alias mutt="printf '\33]2;%s\007' "Mutt" && mutt"
-alias keepassc="printf '\33]2;%s\007' "KeePassC" && keepassc"
 alias kp="printf '\33]2;%s\007' "KeePassC" && keepassc"
 alias d="youtube-dl"
-alias ps_mem="sudo ps_mem"
+alias ps_mem="sudo python ~/Scripts/ps_mem.py"
 alias setclip='xclip -selection c'
 alias getclip='xclip -selection clipboard -o'
-alias y="mpv --ytdl"
 alias r="ranger"
-alias t-stream-timeline="t stream timeline"
-alias rsync-manual="sh $HOME/Scripts/rsync-notify.sh"
-alias upload="owncloud-sharelink"
-alias khal="printf '\33]2;%s\007' "Khal" && khal"
+alias upload="shareLinkCreator"
 alias bm="buku"
-alias bm-list="buku -p"
-alias bm-search="buku -s"
-alias bm-add="buku -a"
 alias y-channels='youtube-viewer -C --channels'
 alias y-favorites='youtube-viewer -C -F'
 alias y-search='youtube-viewer -C -s'
 alias y-search-20='yt --results=20 -C -s'
 alias y-subscriptions='youtube-viewer --resolution=1440p -C -SV --autohide'
 alias y-user='youtube-viewer -C uv'
+alias aa='atool -a'
+alias ax='atool -x'
+alias xa='XZ_OPT=-T4 tar cJfk'
+alias xx='XZ_OPT=-T4 tar xf'
 alias ffmpeg-record='ffmpeg -f alsa -i hw:0 -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0+1920,0 -c:v libx264 -qp 0 -preset ultrafast'
+alias p='sxiv'
+alias vpn='sudo systemctl restart openvpn-client@client.service'
+alias ts="printf '\33]2;%s\007' "t" && t stream timeline --decode_uris"
+alias cal='khal interactive'
+alias html2text='python $HOME/.bin/html2text.py'
+alias diff='colordiff'
 
 # Misc
 alias c='clear'
 alias reload-urxvt='xrdb -merge ~/.Xresources'
-alias myip='curl ipinfo.io'
 alias reboot='sudo killall conky && sleep 1 && sudo reboot'
-alias blog='cd $HOME/git/Hund/hund.github.io/'
 alias blog-run='cd $HOME/git/Hund/hund.github.io/ && jekyll serve --watch'
 alias filmer_och_serier.md='vim $HOME/Documents/Filmer_och_serier.md'
+alias read-it-later='vim $HOME/Documents/read_it_later.md'
 
 # SSH
 alias fjuppen='ssh fjuppen'
 alias bosco='ssh bosco'
 
 # Screen
-alias irc='ssh fjuppen -t "screen -U -r irc"'
-alias rtorrent='echo -e "\e]0;rTorrent\a" && ssh fjuppen -t "screen -U -r rtorrent"'
+alias irc='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "screen -U -r irc"'
 alias mc='ssh fjuppen -t "screen -U -r mc"'
 
+# Create playlists
+alias playlist-flac='ls -w 1 *.flac > 00-playlist.m3u'
+alias playlist-ogg='ls -w 1 *.ogg > 00-playlist.m3u'
+alias playlist-mp3='ls -w 1 *.mp3 > 00-playlist.m3u'
+
 # Pacman / Pacaur
-alias p="pacaur"
 alias ps="pacaur -S"
 alias pss="pacaur -Ss"
 alias pr="pacaur -Rscn"
@@ -87,15 +86,3 @@ alias pu="pacaur -Syu"
 alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rns \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;\$!ba;s/\n/ /g')"
 alias pacc='sudo pacman -Scc'
 alias ph='sh $HOME/Scripts/pacman-helper.sh'
-
-# Directory shortcuts
-alias hdd0='cd /media/HDD0'
-alias pictures='cd /media/HDD0/Pictures'
-alias wallpapers='cd /media/HDD0/Pictures/Wallpapers'
-alias torrents='cd /media/HDD0/Torrents'
-alias videos='cd /media/HDD0/Videos'
-alias downloads='cd $HOME/Downloads'
-alias music='cd /media/HDD0/Music'
-
-# Github
-alias dotfiles='cd ~/git/Hund/dotfiles'

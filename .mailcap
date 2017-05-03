@@ -1,3 +1,8 @@
-text/html; icecat %s &; test=test -n "$DISPLAY"; needsterminal;
+#text/html; qutebrowser %s &; test=test -n "$DISPLAY"; needsterminal;
+text/html; mv %s %s.html && qutebrowser %s.html >/dev/null 2>/dev/null; needsterminal;
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
-image/png; icecat %s &; test=test -n "$DISPLAY"; needsterminal;
+image/jpeg; /usr/bin/feh -. '%s'; description=JPEG Image; test=test -n "$DISPLAY"; nametemplate=%s.jpg
+image/png; /usr/bin/feh -. '%s'; description=PNG Image; test=test -n "$DISPLAY"; nametemplate=%s.png
+image/gif; /usr/bin/feh -. '%s'; description=GIF Image; test=test -n "$DISPLAY"; nametemplate=%s.gif
+application/pdf; zathura %s; test=test -n "$DISPLAY"; needsterminal;
+video/x-youtube; youtube-dl -q -o - '%s' | mpv; test=test -n "$DISPLAY"

@@ -1,27 +1,18 @@
-# Use advanced prompt support
-#autoload -U promptinit && promptinit
-
 # My promt
 PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[1;35m%}%~ 
 %{\e[0m%}>> '
-
-# Use modern completion system
-autoload -U compinit && compinit
 
 # Use colors
 autoload -U colors && colors
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 
-# Load in additional files
-source "$HOME/.zsh/alias"
-source "$HOME/.zsh/keys"
-source "$HOME/.zsh/functions"
-source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
-source "$HOME/.zsh/plugins/h.sh"
-source "$HOME/.zsh/plugins/t-completion.zsh"
+# zsh-completions
+fpath=($HOME/Git/zsh-completions/src $fpath)
+fpath=($HOME/.zsh/completions/ $fpath)
 
 # Exports
 export SHELL="/bin/zsh"
+export TERMINAL="urxvt"
 export EDITOR="vim"
 export BROWSER="qutebrowser"
 export LC_ALL=en_US.UTF-8
@@ -35,10 +26,19 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/Scripts:$PATH"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
+export QT_QPA_PLATFORMTHEME="qt5ct"
 
-# zsh-completions
-fpath=($HOME/Git/zsh-completions/src $fpath)
-fpath=($HOME/.zsh/completions/ $fpath)
+# Load in additional files
+source "$HOME/.zsh/alias"
+source "$HOME/.zsh/keys"
+source "$HOME/.zsh/functions"
+source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+source "$HOME/.zsh/plugins/h.sh"
+source "$HOME/.zsh/plugins/t-completion.zsh"
+source "/etc/profile.d/autojump.sh"
+
+# Use modern completion system
+autoload -U compinit && compinit
 
 # History
 HISTFILE=~/.zsh/history
@@ -47,6 +47,9 @@ SAVEHIST=100000
 
 # No history if command starts with space
 setopt histignorespace
+
+# No need for 'cd'
+setopt autocd
 
 # History Vi-like search 
 bindkey -M vicmd k history-search-backward
@@ -57,8 +60,8 @@ bindkey -M vicmd N history-incremental-search-forward
 bindkey -M vicmd k history-beginning-search-backward
 bindkey -M vicmd j history-beginning-search-forward
 
-# LS_COLORS
-eval $(dircolors -b $HOME/.zsh/plugins/ls_colors)
+# dircolors
+eval $(dircolors -b $HOME/.zsh/dircolors/trapd00r)
 
 # Respect multibyte characters when found in strings
 unsetopt MULTIBYTE
@@ -92,6 +95,12 @@ zle -N bracketed-paste bracketed-paste-magic
 # Home and End keys
 bindkey '\e[H' beginning-of-line
 bindkey '\e[F' end-of-line 
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+bindkey  "^[[1~"   beginning-of-line
+bindkey  "^[[4~"   end-of-line
 
 # Group symlinks with folders first using ls
 # ls -ldU -- *(o+dir1st)
@@ -99,13 +108,10 @@ dir1st() { [[ -d $REPLY ]] && REPLY=1-$REPLY || REPLY=2-$REPLY;}
 
 # Edit command line with $EDITOR
 autoload -U edit-command-line
-# Emacs style
-zle -N edit-command-line
-#bindkey '^xe' edit-command-line
-#bindkey '^x^e' edit-command-line
+
 # Vi style:
 zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd '^V' edit-command-line
 
 # Enable Vi mode for zsh
 bindkey -v
@@ -138,3 +144,19 @@ bindkey -M vicmd '^r' history-incremental-search-backward
 if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
+
+# when new programs is installed, auto update autocomplete without reloading shell
+zstyle ':completion:*' rehash true
+
+# case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Don't prompt for a huge list, page it!
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+
+# copy current command to clipboard (Ctrl+X)
+zle -N copyx; copyx() { echo -E $BUFFER | xsel -ib }; bindkey '^X' copyx
+
+# Prevent Screen from freezing when using Ctrl-S/Q in rTorrent
+stty ixany
+stty ixoff -ixon

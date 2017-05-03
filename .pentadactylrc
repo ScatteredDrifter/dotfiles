@@ -17,23 +17,24 @@ map -count -modes=n <C-v> -builtin <count><C-v><C-v>
 map -count -modes=n <C-x> -builtin <count><C-v><C-x>
 map -count -modes=n,v h -builtin <count>5h
 map -count -modes=n,v j -builtin <count>5j
-map -count -modes=n J -builtin <count>:tabnext<Return>
 map -count -modes=n,v k -builtin <count>5k
-map -count -modes=n K -builtin <count>:tabprevious<Return>
 map -count -modes=n,v l -builtin <count>5l
+map -count -modes=n H -builtin <count>:back<Return>
+map -count -modes=n J -builtin <count>:tabnext<Return>
+map -count -modes=n K -builtin <count>:tabprevious<Return>
+map -count -modes=n L -builtin <count>:forward<Return>
 map -count -modes=n <lt> -builtin <count>:tabmove!<Space>-1<Return>
 map -count -modes=n pp -builtin <count>:private<Space>winopen<Return>
 map -count -modes=n,v <C-s> -builtin <count><C-t>:preferences<Return>
-map -count -modes=n,v <C-a> -builtin <count><C-t>:tabopen<Space>about:addons<Return>
+#map -count -modes=n,v <C-a> -builtin i<count><C-t>:tabopen<Space>about:addons<Return>
 map -count -modes=n,v <C-d> -builtin <count><C-t>:tabopen<Space>about:downloads<Return>
 set defsearch=duckduckgo
 set editor='urxvt -e vim -X'
-set guioptions=s
-set hintkeys=asdfhlkj
+set guioptions=sBr
+set hintkeys=asdfhjkl
 set showtabline=multitab
-set titlestring='Web Browser'
-au Fullscreen * set guioptions=s
+set titlestring='Pale Moon'
+au Fullscreen * set guioptions=sBr
 " vim: set ft=pentadactyl:
 set showtabline=always
-
-
+au LocationChange https://crowdin.com :normal! <C-z>
