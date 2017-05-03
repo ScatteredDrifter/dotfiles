@@ -1,25 +1,69 @@
+#
+# Basic settings
+#
+
 # Set modifier
 set $mod Mod1
+set $win Mod4
+
+# Set floating modifier
 floating_modifier $mod
 
-# Font
-font pango:Terminus 12
-
-# Focus behaviour
-focus_follows_mouse no
-focus_on_window_activation urgent
-
-# Titlebar
-new_window normal
-new_float normal
-#new_window pixel 2
-#new_float pixel 2
-
-# Set keys
+# Navigations keys
 set $up k
 set $down j
 set $left h
 set $right l
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Resize key
+bindsym $mod+r mode "resize"
+
+#
+# Font and colors
+#
+
+# Font
+font pango:xos4Terminus 12
+
+# Colors for clients
+client.focused #255662 #255662 #C0C0C0 #255662
+client.focused_inactive #073642 #073642 #839496 #073642
+client.unfocused #073642 #073642 #839496 #292d2e
+client.urgent #2f343a #A83838 #ffffff #A83838
+
+#
+# Mouse settings
+#
+
+# Mouse warping
+# By default, when switching focus to a client on a different output (e.g. focusing a client on workspace 3 on output VGA-1, coming from workspace 2 on LVDS-1), the mouse cursor is warped to the center of that client.
+mouse_warping none
+
+# If focus should follow your mouse movements
+focus_follows_mouse no
+
+#
+# Client rules
+#
+
+# Focus on client activation
+# If a client is activated, e.g., via google-chrome www.google.com, it may request to take focus. Since this may not preferable, different reactions can be configured.
+# Options: smart | urgent | focus | none
+focus_on_window_activation urgent
+
+# Border style for new clients
+# Syntax: normal | none | pixel | pixel <px>
+new_window normal
+new_float normal
 
 # Toggle border (all)
 bindsym Control+$mod+t [class="^.*"] border toggle
@@ -27,18 +71,8 @@ bindsym Control+$mod+t [class="^.*"] border toggle
 # Toggle border
 bindsym $mod+t border toggle
  
-# Start a terminal
-bindsym $mod+Return exec urxvt
-
-# Kill focused window
+# Kill focused client
 bindsym $mod+Shift+q kill
-
-# rofi
-bindsym $mod+p exec rofi -show run -font "Terminus 12"
-bindsym $mod+shift+p exec rofi -show window -font "Terminus 12"
-
-# Autostart
-exec sleep 2 && $HOME/.i3/autostart.sh
 
 # Change focus
 bindsym $mod+$left focus left
@@ -46,11 +80,23 @@ bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
  
-# Move focused window
+# Move focused client
 bindsym Mod1+Shift+$left move left
 bindsym Mod1+Shift+$down move down
 bindsym Mod1+Shift+$up move up
 bindsym Mod1+Shift+$right move right
+
+# resize clients
+mode "resize" {
+	bindsym $left resize shrink width 5 px or 5 ppt
+	bindsym $down resize grow height 5 px or 5 ppt
+	bindsym $up resize shrink height 5 px or 5 ppt
+	bindsym $right resize grow width 5 px or 5 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
 
 # Split in horizontal orientation
 bindsym $mod+c split h
@@ -61,8 +107,11 @@ bindsym $mod+v split v
 # Enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
+# Enter fullscreen mode for the focused container across all monitors
+bindsym $mod+shift+f fullscreen toggle global
+
 # change container layout (stacked, tabbed, toggle split)
-bindsym Mod1+s layout stacking
+#bindsym Mod1+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym Mod1+e layout toggle split
 
@@ -72,8 +121,42 @@ bindsym $mod+q focus parent
 # toggle tiling / floating
 bindsym $mod+shift+space floating toggle
 
-# change focus between tiling / floating windows
+# change focus between tiling / floating clients
 bindsym $mod+space focus mode_toggle
+
+# Go to latest urgent client
+bindsym $mod+shift+a [urgent=latest] focus
+
+# Application rules
+assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
+assign [class="^Minecraft 1.11.2$" instance="Minecraft 1.11.2$"] 4
+assign [class="^MultiMC5$"] 4
+assign [class="^Gimp$"] 7
+for_window [title="youtube"] workspace 3
+for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
+for_window [class="^Minecraft 1.11.2$" instance="Minecraft 1.11.2$"] fullscreen
+
+#
+# Workspace rules
+#
+
+# Go to previous workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# Move workspace to other monitor
+bindsym $mod+shift+comma move workspace to output right
+bindsym $mod+shift+period move workspace to output left
+
+# Go to next/previus workspace
+bindsym $win+j workspace next
+bindsym $win+k workspace prev
+
+# Spawn workspaces in specific order
+workspace 1 output DVI-I-1
+workspace 2 output DVI-D-0
+workspace 3 output HDMI-0
+workspace 4 output DVI-I-1
+workspace 9 output HDMI-0
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -87,18 +170,6 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-# switch to workspace
-bindsym $mod+KP_1 workspace 1
-bindsym $mod+KP_2 workspace 2
-bindsym $mod+KP_3 workspace 3
-bindsym $mod+KP_4 workspace 4
-bindsym $mod+KP_5 workspace 5
-bindsym $mod+KP_6 workspace 6
-bindsym $mod+KP_7 workspace 7
-bindsym $mod+KP_8 workspace 8
-bindsym $mod+KP_9 workspace 9
-bindsym $mod+KP_0 workspace 10
-
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -111,91 +182,55 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+#
+# Programs
+#
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+# Autostart
+exec sleep 2 && $HOME/.i3/autostart.sh
 
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# Start a terminal
+bindsym $mod+Return exec urxvtc
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-	bindsym $left resize shrink width 5 px or 5 ppt
-	bindsym $down resize grow height 5 px or 5 ppt
-	bindsym $up resize shrink height 5 px or 5 ppt
-	bindsym $right resize grow width 5 px or 5 ppt
+# rofi
+bindsym $mod+p exec rofi -show run -font "xos4Terminus 12"
+bindsym $mod+shift+p exec rofi -show window -font "xos4Terminus 12"
+bindsym $mod+u exec buku_run -font "xos4Terminus 12"
 
-	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-
-# Resize key
-bindsym $mod+r mode "resize"
-
-# Go to previous workspace
-bindsym $mod+Tab workspace back_and_forth
-
-# Move workspace to other monitor
-bindsym $mod+shift+comma move workspace to output right
-bindsym $mod+shift+period move workspace to output left
-
-# Go to latest urgent client
-bindsym $mod+u [urgent=latest] focus
-
-# Application shortcuts
-bindsym Print exec "cd $HOME/Scrot && scrot --no-startup-id && notify-send 'Screenshot captured!' 'Image saved in ~/Scrot'"
-bindsym $mod+shift+f exec "urxvt -e ranger"
-bindsym $mod+shift+g exec "gimp"
-bindsym $mod+shift+b exec "icecat"
-bindsym $mod+shift+m exec "i3-msg workspace 4; exec multimc"
-bindsym $mod+shift+i exec "chromium --incognito"
-bindsym $mod+shift+v exec "virtualbox"
-
-# Application rules
-assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
-assign [class="^Minecraft 1.8.9$" instance="Minecraft 1.8.9$"] 4
-assign [class="^Minecraft 1.9$" instance="Minecraft 1.9$"] 4 
-assign [class="^Minecraft 1.9.4$" instance="Minecraft 1.9.4$"] 4
-assign [class="^Minecraft 1.10.2$" instance="Minecraft 1.10.2$"] 4
-assign [class="^MultiMC5$"] 4
-assign [class="^Gimp$"] 7
-for_window [class="Lxappearance"] floating enable
-for_window [class="chromium"] border pixel 0
-for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
-for_window [class="^Minecraft 1.8.9$" instance="Minecraft 1.8.9$"] fullscreen
-for_window [class="^Minecraft 1.9$" instance="Minecraft 1.9$"] fullscreen
-for_window [class="^Minecraft 1.9.4$" instance="Minecraft 1.9.4$"] fullscreen
-for_window [class="^Minecraft 1.10.2$" instance="Minecraft 1.10.2$"] fullscreen
+# Take screenshot
+bindsym Print exec "scrot --no-startup-id && notify-send 'Screenshot captured!' 'Image saved in your home directory'"
 
 # Volume (ALSA)
-bindsym $mod+Up exec "amixer set Master Front 3+"
-bindsym $mod+Down exec "amixer set Master Front 3-"
-bindsym $mod+m exec "amixer set Master toggle"
+bindsym $mod+plus exec "amixer set Master Front 3+"
+bindsym $mod+minus exec "amixer set Master Front 3-"
+bindsym Ctrl+$mod+m exec "amixer set Master toggle"
 
 # i3lock
-bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/.i3/themes/i3lock-ArchLinux.png --tiling"
+bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/i3/lockscreen.png --tiling --no-unlock-indicator"
 
-# Random wallpaper with feh
-bindsym $mod+Shift+w exec "feh --randomize --bg-fil /media/HDD0/Pictures/Wallpapers"
+# Restore wallaper
+bindsym $mod+Shift+w exec "sh ~/.fehbg"
 
-# Spawn workspaces in specific order
-workspace 1 output DVI-I-1
-workspace 2 output DVI-D-0
-workspace 3 output HDMI-0
-workspace 4 output DVI-I-1
-workspace 9 output HDMI-0
+# Random wallaper with feh
+#bindsym $mod+Shift+w exec "feh --randomize --bg-fil /media/HDD0/Pictures/Wallpapers/"
 
-# i3-bar (Middle)
+# Suspend
+bindsym Ctrl+$mod+Break exec "systemctl suspend"
+
+#
+# i3-bar
+#  
+
+# Toggle bar(s)
+bindsym $mod+b bar mode toggle
+
+# Middle monitor
 bar {
   output DVI-I-1
-	status_command $HOME/.i3/conky1.sh
-    #tray_output primary
+	status_command $HOME/.i3/conky/1.sh
     tray_output none
 	position top
-	font pango:Terminus 12
+	font pango:xos4Terminus 12
 	mode dock
   colors {
     separator #666666
@@ -208,13 +243,13 @@ bar {
   }
 }
 
-# i3-bar (Left)
+# Left monitor
 bar {
   output DVI-D-0
-	status_command $HOME/.i3/conky2.sh
+	status_command $HOME/.i3/conky/2.sh
 	tray_output none
 	position top
-	font pango:Terminus 12
+	font pango:xos4Terminus 12
 	mode dock
   colors {
     separator #666666
@@ -227,13 +262,13 @@ bar {
   }
 }
 
-# i3-bar (Right)
+# Right monitor
 bar {
   output HDMI-0
-	status_command $HOME/.i3/conky3.sh
+	status_command $HOME/.i3/conky/3.sh
 	tray_output none
 	position top
-	font pango:Terminus 12
+	font pango:xos4Terminus 12
 	mode dock
   colors {
     separator #666666
@@ -245,10 +280,3 @@ bar {
     urgent_workspace #BC5959 #A83838 #FFFFFF
   }
 }
-
-# Colors
-
-client.focused #255662 #255662 #C0C0C0 #255662
-client.focused_inactive #073642 #073642 #839496 #073642
-client.unfocused #073642 #073642 #839496 #292d2e
-client.urgent #2f343a #A83838 #ffffff #A83838

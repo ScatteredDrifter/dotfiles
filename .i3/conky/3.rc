@@ -1,0 +1,80 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+update_interval 2.0
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+# use_spacer should have an argument of left, right, or none
+use_spacer left
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# Stuff after 'TEXT' will be formatted on screen
+TEXT
+
+[\
+# Weather
+{ "full_text" : "${eval Weather:}", "color" : "\#27AE60", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 3600 /home/johan/Scripts/weather-yr.sh}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# Sunlight
+{ "full_text" : "${eval Sun:}", "color" : "\#F39C12", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 120 cat /home/johan/.cache/sunrise}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "-", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 120 cat /home/johan/.cache/sunset}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# NAMNSDAG
+{ "full_text" : "${eval Namnsdag:}", "color" : "\#D381C3", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 120 cat /home/johan/.cache/namnsdag}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# MAIL
+#{ "full_text" : "${eval Mail:}", "color" : "\#E74C3C", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${execpi 300 ~/.config/conky/imap-fastmail.pl} unread", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# CHECKUPDATE
+{ "full_text" : "${eval Pacman:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 300 sh "checkupdates.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# AUR
+#{ "full_text" : "${eval AUR:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${execi 300 pacaur -k | wc -l} update(s)", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# RSS
+{ "full_text" : "${eval RSS:}", "color" : "\#859900", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${rss https://www.archlinux.org/feeds/news/ 15 item_titles 1}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# Volume
+{ "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${exec sh "$HOME/Scripts/volume.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+
+# volume
+#{ "full_text" : "${eval Vol:}", "color" : "\#1abc9c", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${exec pamixer --get-volume}%", "color" : "\#cccccc", "separator" : false, "separator_block_width" : 3 }, \
+
+# CLOCK
+{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${time %a %d %b, %H:%M}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+\
+ { "full_text" : "", "color" : "\#EEE8D5", "separator" : false, "separator_block_width" : 3 } \
+], 

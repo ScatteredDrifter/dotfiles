@@ -44,12 +44,12 @@ TEXT
 
 # CPU Temp
 { "full_text" : "${eval CPU:}", "color" : "\#E74C3C", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${exec sensors | grep 'Core 1' | cut -c18-19}${eval °C}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${exec sensors | grep 'Core 1' | cut -c17-18}${eval °C}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # GPU Temp
 { "full_text" : "${eval GPU:}", "color" : "\#E74C3C", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${execi 60 nvidia-settings -query GPUCoreTemp | perl -ne 'print $1 if /GPUCoreTemp.*?: (\d+)./;' | cut -c1-2}°C", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 60 nvidia-smi -q -d temperature | grep  "GPU Current Temp" | cut -c39-40}°C", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # FS: Root
@@ -70,6 +70,11 @@ TEXT
 # Volume
 { "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "${exec sh "$HOME/Scripts/volume.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+
+# volume
+#{ "full_text" : "${eval Vol:}", "color" : "\#1abc9c", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${exec pamixer --get-volume}%", "color" : "\#cccccc", "separator" : false, "separator_block_width" : 3 }, \
+
 # Clock
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "${time %a %d %b, %H:%M}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \

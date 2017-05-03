@@ -1,0 +1,49 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+update_interval 2.0
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+# use_spacer should have an argument of left, right, or none
+use_spacer left
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# Stuff after 'TEXT' will be formatted on screen
+TEXT
+
+[\
+# Network
+{ "full_text" : "${eval VPN:}", "color" : "\#F39C12", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${if_empty ${execi 120 cat /proc/net/route | grep tun0}}${color red}Disconnected!${color}${else}${color green}Connected${color}${endif}${color}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# UPTIME
+{ "full_text" : "${eval Uptime:}", "color" : "\#AA79BE", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${uptime}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# Volume
+{ "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${exec sh "$HOME/Scripts/volume.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+
+# Clock
+{ "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${time %a %d %b, %H:%M}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+
+ { "full_text" : "", "color" : "\#EEE8D5", "separator" : false, "separator_block_width" : 3 } \
+], 
