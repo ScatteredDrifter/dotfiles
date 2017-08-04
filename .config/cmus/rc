@@ -1,0 +1,15 @@
+# Keybindings
+bind -f common u update-cache -f
+
+# Alsa
+set output_plugin=alsa
+set dsp.alsa.device=default
+set mixer.alsa.device=default
+set mixer.alsa.channel=Master
+
+# Colorscheme
+colorscheme cmus-solmin
+
+# UI
+set format_current=Now playing: %a - %t%= %l (%y)
+set format_statusline=%{status} %{?show_playback_position?%{position} %{?duration?/ %{duration} }?%{?duration?%{duration} }} [%{total}] %{?volume>=0?| Vol: %{?lvolume!=rvolume?%{lvolume},%{rvolume} ?%{volume} }}%{?stream?buf: %{buffer} }%{?show_current_bitrate & bitrate>=0? %{bitrate} kbps }%=%{?repeat_current?repeat current?%{?play_library?%{playlist_mode} from %{?play_sorted?sorted }library?playlist}} | %1{continue}%1{follow}%1{repeat}%1{shuffle}
