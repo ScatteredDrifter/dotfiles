@@ -16,7 +16,7 @@ if [ "$distro" = "Arch Linux" ]; then
 fi
 
 # Ubuntu Linux
-if [ "$distro" = "Funtoo GNU/Linux" ]; then
+if [ "$distro" = "Ubuntu" ]; then
     # Apt
     alias ps="sudo apt install"
     alias pss="apt search"
