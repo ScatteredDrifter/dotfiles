@@ -2,10 +2,6 @@
 # Completions
 #------------------------------------------------------------------#
 
-# Pacman
-zstyle ':completion:*:pacman:*' force-list always
-zstyle ':completion:*:*:pacman:*' menu yes select
-
 # Colors
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -66,6 +62,11 @@ autoload -U edit-command-line
 zle -N copyx; copyx() { echo -E $BUFFER | xsel -ib }; bindkey '^X' copyx
 
 #------------------------------------------------------------------#
+# Set distro variable
+#------------------------------------------------------------------#
+distro=$(cat /etc/*-release | grep --color=NEVER -w 'NAME' | cut -c6- | tr -d '"')
+
+#------------------------------------------------------------------#
 # Load in additional files
 #------------------------------------------------------------------#
 source "$HOME/.zsh/alias"
@@ -99,8 +100,8 @@ export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
 # History
 #------------------------------------------------------------------#
 HISTFILE=~/.zsh/history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=5000
+SAVEHIST=5000
 
 # Ignore duplicate history
 setopt hist_ignore_all_dups
@@ -135,18 +136,12 @@ bindkey -M vicmd k history-beginning-search-forward
 #------------------------------------------------------------------#
 # Promt 
 #------------------------------------------------------------------#
-# Prompt themes
-#autoload -Uz promptinit
-#promptinit
-
-# My promt
 PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[1;35m%}%~ 
 %{\e[0m%}>> '
 
 #------------------------------------------------------------------#
 # Colors
 #------------------------------------------------------------------#
-# Use colors
 autoload -U colors && colors
 
 # Dircolors
@@ -241,5 +236,15 @@ stty ixoff -ixon
 # This part needs to be last for the t completion to work
 autoload -Uz compinit
 compinit
+
+#------------------------------------------------------------------#
+# Distro specific things
+#------------------------------------------------------------------#
+# Arch Linux
+if [ "$distro" = "Arch Linux" ]; then
+  # Pacman
+  zstyle ':completion:*:pacman:*' force-list always
+  zstyle ':completion:*:*:pacman:*' menu yes select
+fi
 
 # vim: set ts=2 sw=2 et:
