@@ -27,6 +27,17 @@ cpu_avg_samples 2
 TEXT
 
 [\
+# Twitchy
+{ "full_text" : "${if_empty ${execi 120 twitchy --conky go}}${else}${eval Twitch:}${endif}${color}", "color" : "\#6C71C4", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : " ${execi 300 twitchy --conky go}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${if_empty ${execi 120 twitchy --conky go}}${else ${eval |}}", "color" : "\#6C71C4", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${if_empty ${execi 120 twitchy --conky go}}${else}${eval |}${endif}${color}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
+# Calendar
+{ "full_text" : "${eval Calendar:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : " ${execi 600 /home/johan/Scripts/conky-khal.sh}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+
 # Weather
 { "full_text" : "${eval Weather:}", "color" : "\#27AE60", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "${execi 3600 /home/johan/Scripts/weather-yr.sh}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
@@ -50,9 +61,9 @@ TEXT
 #{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # CHECKUPDATE
-{ "full_text" : "${eval Pacman:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${execi 300 sh "checkupdates.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval Pacman:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${execi 300 sh "checkupdates.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # AUR
 #{ "full_text" : "${eval AUR:}", "color" : "\#3498DB", "separator" : false, "separator_block_width" : 3 }, \
@@ -60,9 +71,9 @@ TEXT
 #{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # RSS
-{ "full_text" : "${eval RSS:}", "color" : "\#859900", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${rss https://www.archlinux.org/feeds/news/ 15 item_titles 1}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval RSS:}", "color" : "\#859900", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${rss https://www.archlinux.org/feeds/news/ 15 item_titles 1}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+#{ "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # Volume
 { "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
