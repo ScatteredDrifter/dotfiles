@@ -143,7 +143,9 @@ eval $(dircolors -b $HOME/.zsh/dircolors/solarized)
 #------------------------------------------------------------------#
 # Keychain
 #------------------------------------------------------------------#
-eval $(keychain --eval --noask --nogui --quiet --agents ssh id_rsa_fjuppen)
+if [ "$HOST" = "Atlas" ]; then
+  eval $(keychain --eval --noask --nogui --quiet --agents ssh id_rsa_fjuppen)
+fi
 
 #------------------------------------------------------------------#
 # Vi mode
