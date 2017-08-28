@@ -64,17 +64,7 @@ zle -N copyx; copyx() { echo -E $BUFFER | xsel -ib }; bindkey '^X' copyx
 #------------------------------------------------------------------#
 # Set distro variable
 #------------------------------------------------------------------#
-distro=$(cat /etc/*-release | grep --color=NEVER -w 'NAME' | cut -c6- | tr -d '"')
-
-#------------------------------------------------------------------#
-# Load in additional files
-#------------------------------------------------------------------#
-source "$HOME/.zsh/alias"
-source "$HOME/.zsh/functions"
-source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
-source "$HOME/.zsh/plugins/h.sh"
-source "$HOME/.zsh/plugins/t-completion.zsh"
-source "/etc/profile.d/autojump.sh"
+distro=$(cat /etc/*-release | grep --color=NEVER -w 'ID' | cut -c4-)
 
 #------------------------------------------------------------------#
 # Variables
@@ -92,7 +82,7 @@ export LANG=en_US.UTF-8
 export PATH="$HOME/Scripts/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/Scripts:$PATH"
-export PATH="$HOME/.gem/ruby/2.4.0/bin:$PATH"
+export PATH="$HOME/.gem/ruby/2.2.0/bin:$PATH"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
 export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
 
@@ -100,8 +90,10 @@ export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
 # History
 #------------------------------------------------------------------#
 HISTFILE=~/.zsh/history
-HISTSIZE=5000
+# Amount of history to keep
 SAVEHIST=5000
+# And how much of that history zsh should read at start
+HISTSIZE=5000
 
 # Ignore duplicate history
 setopt hist_ignore_all_dups
@@ -136,7 +128,7 @@ bindkey -M vicmd k history-beginning-search-forward
 #------------------------------------------------------------------#
 # Promt 
 #------------------------------------------------------------------#
-PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[1;35m%}%~ 
+PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[0;35m%}%~ 
 %{\e[0m%}>> '
 
 #------------------------------------------------------------------#
@@ -204,7 +196,7 @@ autoload -Uz vcs_info # Needed for dynamic windows titles
 # Dynamic window title
 #------------------------------------------------------------------#
 case $TERM in
-  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
+  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|st-256colors|(dt|k|E)term)
     precmd () {
       vcs_info
       print -Pn "\e]0;%n at %M in %~\a"
@@ -241,10 +233,20 @@ compinit
 # Distro specific things
 #------------------------------------------------------------------#
 # Arch Linux
-if [ "$distro" = "Arch Linux" ]; then
+if [ "$distro" = "arch" ]; then
   # Pacman
   zstyle ':completion:*:pacman:*' force-list always
   zstyle ':completion:*:*:pacman:*' menu yes select
 fi
+
+#------------------------------------------------------------------#
+# Load in additional files
+#------------------------------------------------------------------#
+source "$HOME/.zsh/alias"
+source "$HOME/.zsh/functions"
+source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+source "$HOME/.zsh/plugins/h.sh"
+source "$HOME/.zsh/plugins/t-completion.zsh"
+source "/etc/profile.d/autojump.sh"
 
 # vim: set ts=2 sw=2 et:
