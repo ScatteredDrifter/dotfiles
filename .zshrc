@@ -64,11 +64,13 @@ zle -N copyx; copyx() { echo -E $BUFFER | xsel -ib }; bindkey '^X' copyx
 #------------------------------------------------------------------#
 # Set distro variable
 #------------------------------------------------------------------#
+
 distro=$(cat /etc/*-release | grep --color=NEVER -w 'ID' | cut -c4-)
 
 #------------------------------------------------------------------#
 # Variables
 #------------------------------------------------------------------#
+
 export SHELL="/bin/zsh"
 export TERMINAL="rxvt-256color"
 export EDITOR="vim"
@@ -78,17 +80,23 @@ export LC_TIME=sv_SE.UTF-8
 export LANG=en_US.UTF-8
 #export LANGUAGE=en_US.UTF-8
 #export ZLS_COLORS=$LS_COLORS
-#export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/Scripts/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/Scripts:$PATH"
-export PATH="$HOME/.gem/ruby/2.2.0/bin:$PATH"
 export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
-export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
+
+# Ruby
+if [ "$distro" = "gentoo" ] || [ "$distro" = "arch" ]; then
+  #export PATH="$HOME/.gem/ruby/2.2.0/bin:$PATH"
+  export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+  export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
+fi
 
 #------------------------------------------------------------------#
 # History
 #------------------------------------------------------------------#
+
 HISTFILE=~/.zsh/history
 # Amount of history to keep
 SAVEHIST=5000
@@ -128,21 +136,25 @@ bindkey -M vicmd k history-beginning-search-forward
 #------------------------------------------------------------------#
 # Promt 
 #------------------------------------------------------------------#
+
+# <name> at <host> in <dir>
+# >>
 PS1=$'%{\e[0;34m%}%n %{\e[0m%}at %{\e[0;33m%}%M %{\e[0m%}in %{\e[0;35m%}%~ 
 %{\e[0m%}>> '
 
 #------------------------------------------------------------------#
 # Colors
 #------------------------------------------------------------------#
+
 autoload -U colors && colors
 
 # Dircolors
-#eval $(dircolors -b $HOME/.zsh/dircolors/trapd00r)
-eval $(dircolors -b $HOME/.zsh/dircolors/solarized)
+eval $(dircolors -b $HOME/.zsh/dircolors/solarized-hund.256dark)
 
 #------------------------------------------------------------------#
 # Keychain
 #------------------------------------------------------------------#
+
 if [ "$HOST" = "Atlas" ]; then
   eval $(keychain --eval --noask --nogui --quiet --agents ssh id_rsa_fjuppen)
 fi
@@ -150,6 +162,7 @@ fi
 #------------------------------------------------------------------#
 # Vi mode
 #------------------------------------------------------------------#
+
 zle -N edit-command-line
 bindkey -M vicmd '^V' edit-command-line
 # Enable Vi mode for zsh
@@ -192,36 +205,40 @@ bindkey '\eOF'    end-of-line        # gnome-terminal
 #------------------------------------------------------------------#
 # Git
 #------------------------------------------------------------------#
-autoload -Uz vcs_info # Needed for dynamic windows titles
+
+# Needed for dynamic windows titles
+#autoload -Uz vcs_info 
 
 #------------------------------------------------------------------#
 # Dynamic window title
 #------------------------------------------------------------------#
-case $TERM in
-  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|st-256colors|(dt|k|E)term)
-    precmd () {
-      vcs_info
-      print -Pn "\e]0;%n at %M in %~\a"
-    } 
-#    preexec () { print -Pn "\e]0;%n at %M in %~ >> $1\a" }
-    preexec () { print -Pn "\e]0;$1\a" }
-    ;;
-  screen|screen-256color)
-    precmd () { 
-      vcs_info
-      print -Pn "\e]83;title \"$1\"\a" 
-      print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" 
-    }
-    preexec () { 
-      print -Pn "\e]83;title \"$1\"\a" 
-      print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a" 
-    }
-    ;; 
-esac
+
+#case $TERM in
+#  termite|*xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|st-256colors|(dt|k|E)term)
+#    precmd () {
+#      vcs_info
+#      print -Pn "\e]0;%n at %M in %~\a"
+#    } 
+##    preexec () { print -Pn "\e]0;%n at %M in %~ >> $1\a" }
+#    preexec () { print -Pn "\e]0;$1\a" }
+#    ;;
+#  screen|screen-256color)
+#    precmd () { 
+#      vcs_info
+#      print -Pn "\e]83;title \"$1\"\a" 
+#      print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~]\a" 
+#    }
+#    preexec () { 
+#      print -Pn "\e]83;title \"$1\"\a" 
+#      print -Pn "\e]0;$TERM - (%L) [%n@%M]%# [%~] ($1)\a" 
+#    }
+#    ;; 
+#esac
 
 #------------------------------------------------------------------#
 # Fixes
 #------------------------------------------------------------------#
+
 # Prevent Screen from freezing when using Ctrl-S/Q in rTorrent
 stty ixany
 stty ixoff -ixon
@@ -234,6 +251,7 @@ compinit
 #------------------------------------------------------------------#
 # Distro specific things
 #------------------------------------------------------------------#
+
 # Arch Linux
 if [ "$distro" = "arch" ]; then
   # Pacman
@@ -244,11 +262,19 @@ fi
 #------------------------------------------------------------------#
 # Load in additional files
 #------------------------------------------------------------------#
+
 source "$HOME/.zsh/alias"
 source "$HOME/.zsh/functions"
 source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 source "$HOME/.zsh/plugins/h.sh"
 source "$HOME/.zsh/plugins/t-completion.zsh"
-source "/etc/profile.d/autojump.sh"
+
+# Autojump
+if [ "$distro" = "arch" ]; then
+  source "/etc/profile.d/autojump.zsh"
+fi
+if [ "$distro" = "debian" ] || [ "$distro" = "gentoo" ]; then
+  source "/usr/share/autojump/autojump.zsh"
+fi
 
 # vim: set ts=2 sw=2 et:
