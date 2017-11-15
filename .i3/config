@@ -1,6 +1,6 @@
-#
+#------------------------------------------------#
 # Basic settings
-#
+#------------------------------------------------#
 
 # Set modifier
 set $mod Mod1
@@ -10,9 +10,9 @@ set $win Mod4
 floating_modifier $mod
 
 # Navigations keys
-set $up k
-set $down j
 set $left h
+set $down j
+set $up k
 set $right l
 
 # reload the configuration file
@@ -25,11 +25,11 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Resize key
-bindsym $mod+r mode "resize"
+#bindsym $mod+r mode "resize"
 
-#
+#------------------------------------------------#
 # Font and colors
-#
+#------------------------------------------------#
 
 # Font
 font pango:xos4Terminus 12
@@ -40,20 +40,21 @@ client.focused_inactive #073642 #073642 #839496 #073642
 client.unfocused #073642 #073642 #839496 #292d2e
 client.urgent #2f343a #A83838 #ffffff #A83838
 
-#
+#------------------------------------------------#
 # Mouse settings
-#
+#------------------------------------------------#
 
 # Mouse warping
 # By default, when switching focus to a client on a different output (e.g. focusing a client on workspace 3 on output VGA-1, coming from workspace 2 on LVDS-1), the mouse cursor is warped to the center of that client.
-mouse_warping none
+mouse_warping output
+#mouse_warping none
 
 # If focus should follow your mouse movements
 focus_follows_mouse no
 
-#
+#------------------------------------------------#
 # Client rules
-#
+#------------------------------------------------#
 
 # Focus on client activation
 # If a client is activated, e.g., via google-chrome www.google.com, it may request to take focus. Since this may not preferable, different reactions can be configured.
@@ -62,14 +63,17 @@ focus_on_window_activation urgent
 
 # Border style for new clients
 # Syntax: normal | none | pixel | pixel <px>
-new_window normal
-new_float normal
+#new_window pixel 3
+#new_float pixel 3
+#new_window pixel normal
+#new_float pixel normal
 
 # Toggle border (all)
 bindsym Control+$mod+t [class="^.*"] border toggle
 
 # Toggle border
 bindsym $mod+t border toggle
+bindsym $mod+y border pixel 3
  
 # Kill focused client
 bindsym $mod+Shift+q kill
@@ -86,6 +90,11 @@ bindsym Mod1+Shift+$down move down
 bindsym Mod1+Shift+$up move up
 bindsym Mod1+Shift+$right move right
 
+# Swap clients
+bindsym $mod+Shift+m mark alpha
+bindsym $mod+Shift+u [class=.] unmark
+bindsym $mod+Shift+Tab swap container with mark alpha, [class=.] unmark
+
 # resize clients
 mode "resize" {
 	bindsym $left resize shrink width 5 px or 5 ppt
@@ -97,6 +106,10 @@ mode "resize" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
+bindsym $mod+Ctrl+$left resize grow width 5 px or 5 ppt
+bindsym $mod+Ctrl+$down resize grow height 5 px or 5 ppt
+bindsym $mod+Ctrl+$up resize shrink height 5 px or 5 ppt
+bindsym $mod+Ctrl+$right resize shrink width 5 px or 5 ppt
 
 # Split in horizontal orientation
 bindsym $mod+c split h
@@ -127,18 +140,23 @@ bindsym $mod+space focus mode_toggle
 # Go to latest urgent client
 bindsym $mod+shift+a [urgent=latest] focus
 
+#------------------------------------------------#
 # Application rules
-assign [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] 4
-assign [class="^Minecraft 1.11.2$" instance="Minecraft 1.11.2$"] 4
-assign [class="^MultiMC5$"] 4
-assign [class="^Gimp$"] 7
-for_window [title="youtube"] workspace 3
-for_window [class="^Minecraft 1.7.10$" instance="Minecraft 1.7.10$"] fullscreen
-for_window [class="^Minecraft 1.11.2$" instance="Minecraft 1.11.2$"] fullscreen
+#------------------------------------------------#
 
-#
+# Workspaces
+assign [class="Gimp"] 7
+assign [class="MultiMC5"] 4
+assign [class="Minecraft*"] 4
+# Fullscreen
+for_window [class="Minecraft*"] fullscreen
+for_window [class="mpv" instance="fs3"] border none
+# No window decoration
+for_window [class="Spotify"] border none
+
+#------------------------------------------------#
 # Workspace rules
-#
+#------------------------------------------------#
 
 # Go to previous workspace
 bindsym $mod+Tab workspace back_and_forth
@@ -182,44 +200,82 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-#
+
+#------------------------------------------------#
 # Programs
-#
+#------------------------------------------------#
 
 # Autostart
-exec sleep 2 && $HOME/.i3/autostart.sh
+exec --no-startup-id sleep 2 && $HOME/.i3/autostart.sh
 
 # Start a terminal
 bindsym $mod+Return exec urxvtc
 
 # rofi
-bindsym $mod+p exec rofi -show run -font "xos4Terminus 12"
-bindsym $mod+shift+p exec rofi -show window -font "xos4Terminus 12"
-bindsym $mod+u exec buku_run -font "xos4Terminus 12"
+bindsym $mod+p exec rofi -m -0 -bw 3 -show run -display-run "Run" -font "xos4Terminus 12"
+bindsym $mod+shift+w exec rofi -m 0 -bw 3 -show window -display-run "Window" -font "xos4Terminus 12"
+bindsym $mod+shift+p exec "sh $HOME/Scripts/rofi-scripts.sh"
+#bindsym $mod+u exec buku_run -m -4 -font "xos4Terminus 12"
+
+# Open empty container
+bindsym $mod+shift+o exec i3-msg open ; exec i3-msg border toggle
 
 # Take screenshot
-bindsym Print exec "scrot --no-startup-id && notify-send 'Screenshot captured!' 'Image saved in your home directory'"
+bindsym Print exec --no-startup-id "scrot && notify-send 'Screenshot captured!' 'Image saved in your home directory'"
 
 # Volume (ALSA)
-bindsym $mod+plus exec "amixer set Master Front 3+"
-bindsym $mod+minus exec "amixer set Master Front 3-"
-bindsym Ctrl+$mod+m exec "amixer set Master toggle"
+#bindsym $mod+plus exec "amixer set Master Front 2+"
+#bindsym $mod+minus exec "amixer set Master Front 2-"
+#bindsym Ctrl+$mod+m exec "amixer set Master toggle"
+#bindsym $mod+plus exec "volume.sh up"
+#bindsym $mod+minus exec "volume.sh down"
+#bindsym $mod+Ctrl+m exec "volume.sh mute"
+# Volume (PulseAudio)
+bindsym $mod+plus exec "volume-pa.sh up"
+bindsym $mod+minus exec "volume-pa.sh down"
+bindsym $mod+Ctrl+m exec "volume-pa.sh mute"
 
 # i3lock
-bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/i3/lockscreen.png --tiling --no-unlock-indicator"
+bindsym Ctrl+$mod+Delete exec "i3lock -i $HOME/.i3/lockscreen.png --tiling --no-unlock-indicator"
 
 # Restore wallaper
-bindsym $mod+Shift+w exec "sh ~/.fehbg"
+#bindsym $mod+Shift+w exec "sh ~/.fehbg"
 
 # Random wallaper with feh
-#bindsym $mod+Shift+w exec "feh --randomize --bg-fil /media/HDD0/Pictures/Wallpapers/"
+#bindsym $mod+Shift+w exec "feh --randomize --bg-fill /media/HDD0/Pictures/Wallpapers/Unsplash/"
 
 # Suspend
 bindsym Ctrl+$mod+Break exec "systemctl suspend"
+#bindsym Ctrl+$mod+Break exec "sudo pm-suspend"
 
-#
+# Music player
+bindsym XF86AudioPlay exec "cmus-remote -u"
+bindsym XF86AudioNext exec "cmus-remote -n"
+bindsym XF86AudioPrev exec "cmus-remote -r"
+
+#------------------------------------------------#
+# i3-gaps
+#------------------------------------------------#
+
+# gaps
+gaps inner 5
+gaps outer 1
+
+# For gaps to work we need to disable titles
+for_window [class="^.*"] border pixel 3
+
+# Only show gaps if two or more containers
+smart_gaps on
+
+# Only show borders if two or more containers
+smart_borders on
+
+bindsym $mod+Shift+plus gaps inner all plus 5
+bindsym $mod+Shift+minus gaps inner all minus 5
+
+#------------------------------------------------#
 # i3-bar
-#  
+#------------------------------------------------#
 
 # Toggle bar(s)
 bindsym $mod+b bar mode toggle

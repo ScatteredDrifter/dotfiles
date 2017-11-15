@@ -29,7 +29,7 @@ TEXT
 [\
 # Network
 { "full_text" : "${eval VPN:}", "color" : "\#F39C12", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${if_empty ${execi 30 cat /proc/net/route | grep tun0}}${color red}Disconnected!${color}${else}${color green}Connected${color}${endif}${color}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${if_empty ${execi 10 cat /proc/net/route | grep tun0}}${color red}Disconnected!${color}${else}${color green}Connected${color}${endif}${color}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "${eval |}", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # UPTIME
@@ -39,7 +39,7 @@ TEXT
 
 # Volume
 { "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${execi 5 sh "$HOME/Scripts/volume_print_pa.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${exec sh "$HOME/Scripts/volume.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 
 # Clock
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \

@@ -44,7 +44,7 @@ TEXT
 
 # CPU Temp
 { "full_text" : "${eval CPU:}", "color" : "\#E74C3C", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${exec sensors | grep 'Core 1' | cut -c17-18}${eval °C}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${exec sensors | grep 'Core 1' | cut -c18-19}${eval °C}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # GPU Temp
@@ -53,7 +53,7 @@ TEXT
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
 # FS: Root
-{ "full_text" : "${eval Root:}", "color" : "\#D381C3", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${eval Root:}", "color" : "\#AA79BE", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "${fs_free /}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
 
@@ -69,11 +69,7 @@ TEXT
 
 # Volume
 { "full_text" : "${eval Vol:}", "color" : "\#1ABC9C", "separator" : false, "separator_block_width" : 3 }, \
-{ "full_text" : "${exec sh "$HOME/Scripts/volume.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
-
-# volume
-#{ "full_text" : "${eval Vol:}", "color" : "\#1abc9c", "separator" : false, "separator_block_width" : 3 }, \
-#{ "full_text" : "${exec pamixer --get-volume}%", "color" : "\#cccccc", "separator" : false, "separator_block_width" : 3 }, \
+{ "full_text" : "${execi 5 sh "$HOME/Scripts/volume_print_pa.sh"}", "color" : "\#CCCCCC", "separator" : false, "separator_block_width" : 3 }, \
 
 # Clock
 { "full_text" : "|", "color" : "\#333333", "separator" : false, "separator_block_width" : 3 }, \
