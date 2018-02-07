@@ -23,7 +23,7 @@ set mutt_command=mutt
 set print_command=lpr
 
 # Command used to start the web browser
-set www_command=icecat
+set www_command=w3m
 
 # address style [eu|us|uk]
 set address_style=eu
