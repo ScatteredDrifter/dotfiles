@@ -66,7 +66,7 @@ color bold        brightyellow   default
 color index       yellow default "~U" # unread messages
 
 # Urgent hint for new emails
-set beep_new
+#set beep_new
 
 # aliases (sort of address book)
 source ~/.config/mutt/aliases
@@ -137,4 +137,3 @@ bind pager k previous-line
 bind pager g top
 bind pager G bottom
 bind attach <return> view-mailcap
-bind index,pager B sidebar-toggle-visible
