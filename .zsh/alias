@@ -52,6 +52,10 @@ alias ax='atool -x'
 alias xa='XZ_OPT=-T4 tar cJfk'
 alias xx='XZ_OPT=-T4 tar xf'
 alias diff='colordiff'
+alias eu='expandurl'
+alias sub-en='subberthehut -l eng'
+alias sub-sv='subberthehut -l swe'
+alias nextcloud-sync='ssh fjuppen -t "nextcloudcmd -h -n /media/HDD0/Nextcloud https://c.tty1.se"'
 
 # Atlas & Fjuppen
 if [ "$HOST" = "Atlas" ] || [ "$HOST" = "Fjuppen" ]; then
@@ -65,7 +69,6 @@ if [ "$HOST" = "Atlas" ] || [ "$HOST" = "Fjuppen" ]; then
     alias upload='shareLinkCreator'
     alias bm='buku'
     alias p='sxiv'
-    alias html2text='python $HOME/.bin/html2text.py'
     alias pdf='qpdfview'
     alias y='youtube-viewer -C'
     alias y-search-10='yt --results=10 -C -s'
@@ -88,6 +91,7 @@ if [ "$HOST" = "Atlas" ]; then
     alias fjuppen='ssh fjuppen -t "source ~/.zshrc ; /bin/zsh"'
     alias bosco='ssh bosco'
     alias billy='ssh billy'
+    alias alpine='ssh alpine'
 fi
 
 #------------------------------------------------------------------#
@@ -95,10 +99,10 @@ fi
 #------------------------------------------------------------------#
 if [ "$HOST" = "Atlas" ]; then
     #alias irc='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "screen -U -r irc"'
-    alias irc='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "tmux attach -t irc"'
+    alias weechat='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "tmux attach -t irc"'
     alias mc='ssh fjuppen -t "tmux attach -t mc"'
     alias mc2='ssh fjuppen -t "tmux attach -t mc2"'
-    alias rtorrent='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "tmux attach -t rtorrent"'
+    alias rtorrent-alpine='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@alpine -t "screen -r rtorrent"'
     alias tw='autossh -M 0 -o "ServerAliveInterval 45" -o "ServerAliveCountMax 2" johan@fjuppen -t "tmux attach -t tw"'
 fi
 
@@ -116,7 +120,6 @@ if [ "$distro" = "arch" ]; then
     alias pr='pacaur -Rscn'
     alias pi='pacaur -Si'
     alias pu='pacaur -Syu'
-    alias pacro='/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rns \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;\$!ba;s/\n/ /g')'
     alias pacc='sudo pacman -Scc'
     alias ph='sh $HOME/Scripts/pacman-helper.sh'
 fi
