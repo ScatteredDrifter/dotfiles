@@ -1,0 +1,16 @@
+background no
+out_to_console yes
+update_interval 3.0
+total_run_times 0
+use_spacer none
+
+TEXT
+# VPN
+^fg(\#F39C12)${eval VPN:} ^fg(\#CCC)${if_empty ${execi 30 cat /proc/net/route | grep tun0}}${color red}Disconnected!${color}${else}${color green}Connected${color}${endif}${color} \
+# Uptime
+^fg(\#333)${eval |} ^fg(\#AA79BE)${eval Uptime:} ^fg(\#CCC)${uptime} ^fg(\#333)${eval |} \
+# Volume
+^fg(\#1ABC9C)${eval Vol:} ^fg(\#CCC)${execi 5 sh "$HOME/Scripts/volume_print.sh"} ^fg(\#333)${eval |} \
+# Clock
+^fg(\#CCC)${time %a %d %b, %H:%M}
+

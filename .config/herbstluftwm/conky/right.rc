@@ -1,0 +1,20 @@
+background no
+out_to_console yes
+update_interval 3.0
+total_run_times 0
+use_spacer none
+short_units yes
+
+TEXT
+# Weather
+^fg(\#27AE60)${eval Weather:} ^fg(\#CCC)${exec cat ~/.cache/weather-yr.log} ^fg(\#333)${eval |} \
+# Sunlight
+^fg(\#F39C12)${eval Sunrise:} ^fg(\#CCC)${execi 120 cat ~/.cache/sunrise} ^fg(\#333)${eval |} \
+^fg(\#F39C12)${eval Sunset:} ^fg(\#CCC)${execi 120 cat ~/.cache/sunset} ^fg(\#333)${eval |} \
+# Names day
+^fg(\#AA79BE)${eval Names day:} ^fg(\#CCC)${execi 120 cat ~/.cache/namnsdag} ^fg(\#333)${eval |} \
+# Volume
+^fg(\#1ABC9C)${eval Vol:} ^fg(\#CCC)${execi 5 sh "$HOME/Scripts/volume_print.sh"} ^fg(\#333)${eval |} \
+# Clock
+^fg(\#CCC)${time %a %d %b, %H:%M }
+

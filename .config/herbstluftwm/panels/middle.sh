@@ -1,9 +1,11 @@
 #!/bin/bash
 
+monitor=${1:-0}
 herbstclient pad $monitor 18
 
 FG='#CCCCCC'
 BG='#000000'
+#FONT="*-terminus-medium-r-normal-*-16-*-*-*-*-*-iso10646-*"
 FONT="-xos4-terminus-medium-*-*-*-16-*-*-*-*-*-*-*"
 
 function uniq_linebuffered() {
@@ -11,8 +13,9 @@ function uniq_linebuffered() {
 }
  
 {
-   conky -c ~/.config/herbstluftwm/conky.rc | while read -r; do
+   conky -c ~/.config/herbstluftwm/conky/middle.rc | while read -r; do
       echo -e "conky $REPLY";
+
    done > >(uniq_linebuffered) &
    childpid=$!
    herbstclient --idle
@@ -60,4 +63,4 @@ function uniq_linebuffered() {
                   ;;
                esac
      done
-} 2> /dev/null |dzen2 -ta l -y 0 -x 0 -h 18 -w 1920 -fg $FG -bg $BG -fn $FONT &
+} 2> /dev/null |dzen2 -ta l -y 0 -x 0 -h 18 -w 1920 -fg $FG -bg $BG -fn $FONT -xs 1 &

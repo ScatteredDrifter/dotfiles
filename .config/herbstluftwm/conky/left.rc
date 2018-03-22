@@ -1,0 +1,30 @@
+background no
+out_to_console yes
+update_interval 3.0
+total_run_times 0
+use_spacer none
+short_units yes
+
+TEXT
+# Load
+^fg(\#3498DB)${eval Load:} ^fg(\#CCC)${loadavg 1 2 5} ^fg(\#333)${eval |} \
+# CPU
+^fg(\#3498DB)${eval CPU:} ^fg(\#CCC)${cpu}% ^fg(\#333)${eval |} \
+# RAM
+^fg(\#27AE60)${eval RAM:} ^fg(\#CCC)${memperc}% ^fg(\#333)${eval |} \
+# TEMP CPU
+^fg(\#E74C3C)${eval CPU:} ^fg(\#CCC)${exec sensors | grep 'Core 1' | cut -c18-19}°C ^fg(\#333)${eval |} \
+# TEMP GPU
+^fg(\#E74C3C)${eval CPU:} ^fg(\#CCC)${execi 60 nvidia-smi -q -d temperature | grep  "GPU Current Temp" | cut -c39-40}°C ^fg(\#333)${eval |} \
+# FS ROOT
+^fg(\#AA79BE)${eval Root:} ^fg(\#CCC)${fs_free /} ^fg(\#333)${eval |} \
+# FS HOME
+^fg(\#AA79BE)${eval Home:} ^fg(\#CCC)${fs_free /home} ^fg(\#333)${eval |} \
+# FS HDD0
+^fg(\#AA79BE)${eval HDD0:} ^fg(\#CCC)${fs_free /media/HDD0} ^fg(\#333)${eval |} \
+# FS HDD1
+^fg(\#AA79BE)${eval HDD1:} ^fg(\#CCC)${fs_free /media/HDD1} ^fg(\#333)${eval |} \
+# Volume
+^fg(\#1ABC9C)${eval Vol:} ^fg(\#CCC)${execi 5 sh "$HOME/Scripts/volume_print.sh"} ^fg(\#333)${eval |} \
+# Clock
+^fg(\#CCC)${time %a %d %b, %H:%M}
