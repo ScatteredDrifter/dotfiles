@@ -1,6 +1,4 @@
 My dotfiles
 ========
 
-![](screenshot.png)
-
-My configuration files. Enjoy!
+I have moved to here: https://notabug.org/Hund/dotfiles
